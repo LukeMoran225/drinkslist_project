@@ -1,3 +1,9 @@
+from drinkslist import views
+from django.contrib import admin
+from django.urls import path
+from django.urls import include
+
+
 """drinkslist_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,5 +23,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    path('drinkslist/', include('drinkslist.urls')),
     path('admin/', admin.site.urls),
 ]
