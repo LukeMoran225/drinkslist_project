@@ -48,3 +48,19 @@ def register(request):
                   context={'user_form': user_form,
                            'profile_form': profile_form,
                            'registered': registered})
+def user_login(request):
+    if request.method =='POST':
+        username= request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username,password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return redirect(reverse('drinkslist:index'))
+            else:
+                return HttpResponse("Your Drinkslist account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied")
+    else:
+        return render(request,'drinkslist/login.html')
