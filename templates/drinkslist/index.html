@@ -3,10 +3,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+	<script src="https://kit.fontawesome.com/fc2a073466.js" crossorigin="anonymous"></script>
     <title>Drinkslist</title>
+	<style>
+	.search-txt{
+		position:absolute;
+		height: 50px;
+		width: 600px;
+		top: 40%;
+		left: 30%;
+	}
+	.search-icon{
+		position:absolute;
+		top:42%;
+		left:63%;
+	}
+	</style>
 </head>
 <body>
-
     <h1>Testing Dynamic Templates</h1>
     <div>
         <a href="/drinkslist/about/">About</a><br />
@@ -14,8 +28,9 @@
     </div>
 
     <div>
-        <script async src="https://cse.google.com/cse.js?cx=010938217216454462722:unpmdeb1lhb"></script>
-        <div class="gcse-search"></div>
+        <input class="search-txt" type="text" name="" placeholder="Type to search">
+		<a class="search-icon" href="#">
+		<i class="fas fa-search"></i>
     </div>
 
     <!-- Bootstrap core JavaScript -->
