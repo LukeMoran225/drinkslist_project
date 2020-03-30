@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +18,7 @@
 <h1>Login to drinkslist</h1>
 <input class="home-but"type="button" class="btn btn-lg btn-success" onclick="window.location.href='index.html';" value="Home" />
 <form id="login_form" method="post" action="{% url 'rango:login' %}">
+	{% csrf_token %}
 	<br />
     Username: <input type="text" name="username" value="" size="50" />
     <br />
