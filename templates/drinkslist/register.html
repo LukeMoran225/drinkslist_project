@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    {% if registered %}
+        <strong>Registered</strong>
+    {% else %}
+        <Strong>Register Here</Strong>
+        <form id="user_form" method="post" action="{% url 'drinkslist:register' %}"
+            enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ user_form.as_p}}
+        {{ profile_form.as_p}}
+
+        <input type="submit" name="submit" value="Register" />
+            </form>
+    {% endif %}
+
+
+</body>
+</html>
