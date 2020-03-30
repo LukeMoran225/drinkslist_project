@@ -5,9 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <style>
+		.home-but{
+		position:absolute;
+		height:40px;
+		width:60px;
+		top:0;
+		right:0;
+	}
+	</style>
 </head>
 <body>
     <h1>Register</h1>
+    <input class="home-but"type="button" class="btn btn-lg btn-success" onclick="window.location.href='index.html';" value="Home" />
     {% if registered %}
         <strong>Registered</strong>
     {% else %}
