@@ -1,6 +1,6 @@
 # Drinkslist
 
-[![Generic badge](https://img.shields.io/badge/Drinkslist-PythonAnywhere-brightgreen.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Drinkslist-PythonAnywhere-brightgreen.svg)](http://drinkslist.pythonanywhere.com/)
 
 description text here
 
