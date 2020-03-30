@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>Login</title>
+	<style>
+		.home-but{
+		position:absolute;
+		height:40px;
+		width:60px;
+		top:0;
+		right:0;
+	}
+	</style>
+</head>
+<body>
+<h1>Login to drinkslist</h1>
+<input class="home-but"type="button" class="btn btn-lg btn-success" onclick="window.location.href='index.html';" value="Home" />
+<form id="login_form" method="post" action="{% url 'rango:login' %}">
+	<br />
+    Username: <input type="text" name="username" value="" size="50" />
+    <br />
+    Password: <input type="password" name="password" value="" size="50" />
+    <br />
+    <input type="submit" value="submit" />
+</form>
+</body>
+</html>
