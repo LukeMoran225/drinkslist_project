@@ -8,8 +8,6 @@
     <style>
 		.home-but{
 		position:absolute;
-		height:40px;
-		width:60px;
 		top:0;
 		right:0;
 	}
@@ -17,7 +15,7 @@
 </head>
 <body>
     <h1>Register</h1>
-    <input class="home-but"type="button" class="btn btn-lg btn-success" onclick="window.location.href='index.html';" value="Home" />
+    <input class="home-but"type="button" onclick="window.location.href='index.html';" value="Home" />
     {% if registered %}
         <strong>Registered</strong>
     {% else %}
