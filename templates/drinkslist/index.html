@@ -3,8 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<script src="https://kit.fontawesome.com/fc2a073466.js" crossorigin="anonymous"></script>
     <title>Drinkslist</title>
+	
+    <!-- main css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<style>
 	.search-txt{
 		position:absolute;
@@ -17,9 +19,19 @@
 		position:absolute;
 		top:42%;
 		left:63%;
-	}
-	</style>
+    }
+    
+    .search-button{
+        border: 0ex;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    </style>
+    
+
 </head>
+
 <body>
     <h1>Testing Dynamic Templates</h1>
     <div>
@@ -27,10 +39,60 @@
         <a href="/drinkslist/contactus/">Contact Us</a><br />
     </div>
 
+    
     <div>
-        <input class="search-txt" type="text" name="" placeholder="Type to search">
-		<a class="search-icon" href="#">
-		<i class="fas fa-search"></i>
+        <!-- normal HTTPREQUEST Object -->
+        <!-- <form id="user-forms" method="POST" action="{% url 'drinkslist:index' %}"> -->
+            <select name="search-selection" id="search-selection">
+                <option value="static">static</option>
+                <option value="google">google</option>
+            </select>
+            {% csrf_token %}
+            <input class="search-txt" type="text" name="query" id="query" placeholder="Type to search">
+            <a class="search-icon">
+            <button class="search-button" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+            
+        <!-- </form> -->
+
+    </div>
+        
+    </div>
+
+
+    <div class="gsc-results-wrapper-overlay gsc-results-wrapper-visible" style="display: none;" id="dialog">
+        <!-- better to perform ajax to render the results -->
+        <h2>Light Searching Result</h2>
+    <div class="gsc-results-close-btn gsc-results-close-btn-visible" id="exit_btn"></div>
+    <div id="search-result" class="list-group-item">
+    <!-- {% if result_list %} -->
+        <h2>Results</h2>
+        <div class="list-group" >
+            {% for result in result_list %}
+                <div class="list-group-item">
+                    <h3 class="list-group-item-heading">
+                        <a href="{{result.link}}">
+                            {{result.title|safe|escape}}
+                        </a>
+                    </h3>
+                    <p class="list-group-item">
+                        {{result.summary|safe|escape}}
+                    </p>
+                </div>
+            {% endfor %}
+            
+        </div>
+        
+    <!-- {% endif %} -->
+    </div>
+
+    <!-- dynamic searching in google -->
+    <div class="gcsc-more-maybe-branding-root"></div>
+
+    <!-- hidding the google search api when loading-->
+    <script async src="https://cse.google.com/cse.js?cx=010938217216454462722:unpmdeb1lhb"></script>
+    <div class="gcse-search" style="display: none;"></div>
     </div>
 
     <!-- Bootstrap core JavaScript -->
@@ -38,8 +100,14 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="{% static 'js/jquery-3.3.1.min.js' %}" crossorigin="anonymous">
     </script>
+    <script src="https://kit.fontawesome.com/fc2a073466.js" crossorigin="anonymous"></script>
+    <script src="{% static 'css/gsc.css' %}" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- User Defined JS -->
+    <script src="{% static 'js/search-ajax.js' %}" crossorigin="anonymous"></script>
 
+    
 </body>
 </html>
