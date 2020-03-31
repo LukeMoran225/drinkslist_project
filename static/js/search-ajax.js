@@ -46,17 +46,16 @@ $(document).ready(function(){
                         var link = data[i]['link'];
                         var summary = data[i]['summary'];
                         raw = $('#search-result').html();
-                        raw = raw + '<a href='+ link+' >'+title+'</a>' +' <br />'+ summary + '<br/>'
+                        raw = raw + '<li class="list-group-item"><a class="list-group-item list-group-item-action" href='+ link+' >'+title+'</a>' +' <br />'+''+ summary + '</li><br/>'
                         $('#search-result').html(raw);
                         console.log(raw);
                     };
-
                     // sorting all the results
                     $('#search-result').html(raw);
                     console.log(data);
                 }else{
                     // No results found
-                    $('#search-result').html("No result found, try searching for "+'<strong style="color:#007bff">'+query+'</strong>'+" in Google");
+                    $('#search-result').html('<li class="list-group-item">'+'No results found, try searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google</li>");
                 }
             },
             failure: function(data){
@@ -71,5 +70,15 @@ $(document).ready(function(){
         var raw;
         $('#search-result').empty();
     });
+
+    
 });
 
+// click other div will close the popup window, not done
+// $(document).bind("click",function(){
+//     if($('#dialog').css('display')!="none"){
+//         $('#dialog').mousedown(function(){
+//             $(this).hide();
+//         });
+//     }
+// });
