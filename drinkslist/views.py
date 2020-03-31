@@ -60,6 +60,7 @@ def register(request):
                            'profile_form': profile_form,
                            'registered': registered})
 
+
 def user_login(request):
     if request.method =='POST':
         username= request.POST.get('username')

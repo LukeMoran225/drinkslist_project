@@ -1,20 +1,21 @@
-<!DOCTYPE html>
+{% extends 'drinkslist/base.html' %}
 {% load staticfiles %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-	<title>Login</title>
-	<style>
-		.home-but{
-		position:absolute;
-		top:0;
-		right:0;
-	}
-	</style>
-</head>
-<body>
-<h1>Login to drinkslist</h1>
-<input class="home-but"type="button" class="btn btn-lg btn-success" onclick="window.location.href='index.html';" value="Home" />
+
+{% block title_block %}
+	Login
+{% endblock %}
+
+{% block heading_block %}
+	Login to Drinkslist
+{% endblock %}
+		
+
+{% block nav_button_block %}
+	<a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
+{% endblock %}
+	
+
+{% block body_block %}
 <form id="login_form" method="post" action="{% url 'drinkslist:login' %}">
 	{% csrf_token %}
 	<br />
@@ -24,5 +25,4 @@
     <br />
     <input type="submit" value="submit" />
 </form>
-</body>
-</html>
+{% endblock %}
