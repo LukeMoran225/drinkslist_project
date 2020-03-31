@@ -16,7 +16,9 @@ def read_google_key():
                 google_api_key = list1[0].strip()
                 engine_api_key = list1[1].strip()
         except:
-            raise IOError('google.key file not found')
+            # raise IOError('google.key file not found')
+            google_api_key = "AIzaSyBjGCyqUeXZT-AdZlWIf9auoK41_8kpxF8"
+            engine_api_key = "010938217216454462722:unpmdeb1lhb"
 
     if not google_api_key:
         # raise KeyError('Google key not found')
