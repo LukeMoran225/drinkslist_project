@@ -48,8 +48,8 @@
 <body>
     <h1>Testing Dynamic Templates</h1>
 	<div class="container">
-		<input type="button" onclick="window.location.href='login.html';" value="Login" />
-		<input type="button" onclick="window.location.href='register.html';" value="Register" />
+		<a href="{% url 'drinkslist:login' %}"><input type="button" value="Login" /></a>
+		<a href="{% url 'drinkslist:register' %}"><input type="button" value="Register" /></a>
     </div>
 	
     <div>
