@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('.search-button').mouseenter(function(){
-        $(this).css("color","blue");
+        $(this).css("color","#007bff");
     });
    
     $('.search-button').mouseleave(function(){
@@ -8,11 +8,14 @@ $(document).ready(function(){
     });
     
     $('.search-button').click(function(){
-        // // AJAX
+        // AJAX
         var selection = $('#search-selection').val();
         var query = $('#query').val();
         console.log(selection);
         console.log(query);
+
+        // CSRF FAILS WHILE POST METHOD
+
         // var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
         // // var url = $('#user-forms').attr('action');
         // var xml = new XMLHttpRequest();
@@ -46,7 +49,7 @@ $(document).ready(function(){
                         var link = data[i]['link'];
                         var summary = data[i]['summary'];
                         raw = $('#search-result').html();
-                        raw = raw + '<li class="list-group-item"><a class="list-group-item list-group-item-action" href='+ link+' >'+title+'</a>' +' <br />'+''+ summary + '</li><br/>'
+                        raw = raw + '<li class="list-group-item"><a style="color:#007bff" class="list-group-item list-group-item-action" href='+ link+' >'+title+'</a>' +' <br />'+''+ summary + '</li><br/>'
                         $('#search-result').html(raw);
                         console.log(raw);
                     };
@@ -55,7 +58,7 @@ $(document).ready(function(){
                     console.log(data);
                 }else{
                     // No results found
-                    $('#search-result').html('<li class="list-group-item">'+'No results found, try searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google</li>");
+                    $('#search-result').html('<li class="list-group-item">'+'No results found, searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google?</li>");
                 }
             },
             failure: function(data){
@@ -71,10 +74,10 @@ $(document).ready(function(){
         $('#search-result').empty();
     });
 
-    
 });
 
 // click other div will close the popup window, not done
+
 // $(document).bind("click",function(){
 //     if($('#dialog').css('display')!="none"){
 //         $('#dialog').mousedown(function(){

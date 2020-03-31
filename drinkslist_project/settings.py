@@ -31,7 +31,7 @@ SECRET_KEY = '+lf6m=4ws+b038eb9rc*gdsbkc+^jo6lp1ruwaq)$9sh*bqhm1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','http://drinkslist.pythonanywhere.com/']
 
 
 # Application definition
