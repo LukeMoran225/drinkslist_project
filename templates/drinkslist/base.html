@@ -1,0 +1,70 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drinkslist - 
+    {% block title_block %}
+        Index
+    {% endblock %}
+    </title>
+
+    <!-- main external css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <!-- header css : better to separate css files to static folders -->
+    <style>
+    </style>
+
+</head>
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-dark bg-dark sticky-top ">
+        <nav>
+            <!-- BASE TEMPLATE PREPARATION - Drinkslist - {{name}} -->
+            <span class="navbar-brand mb-0 h1">Drinkslist - 
+            {% block heading_block %}
+                Homepage
+            {% endblock %}
+            </span>
+        </nav>
+        <div class="btn-group " role="group" aria-label="Basic example">
+            {% block nav_button_block %}
+            <a href="{% url 'drinkslist:login' %}"><button type="button" class="btn btn-secondary active">Login</button></a>
+            <a href="{% url 'drinkslist:register' %}"><button type="button" class="btn btn-dark btn-secondary active" >Register</button></a>
+            {% endblock %}
+        </div>
+    </nav>
+
+    <!-- main container -->
+    {% block body_block %}
+    {% endblock %}
+    
+    <!-- footer -->
+    <nav class="py-2 navbar fixed-bottom bg-secondary">
+        {% block footer_block %}
+        <small style="color: aliceblue;">Copyright &copy; Drinkslist</small>
+        <a style="color: aliceblue;" class="navbar-brand" href="{% url 'drinkslist:about' %}">About</a><br />
+        <a style="color: aliceblue;" class="navbar-brand" href="{% url 'drinkslist:contactus' %}">Contact Us</a><br />
+        <a style="color: aliceblue;" class="navbar-brand" href="{% url 'drinkslist:index' %}">Home</a><br />
+        {% endblock %}
+    </nav>
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}" crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/fc2a073466.js" crossorigin="anonymous"></script>
+    <script src="{% static 'css/gsc.css' %}" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- User Defined JS & AJAX -->
+    <script src="{% static 'js/search-ajax.js' %}" crossorigin="anonymous"></script>
+
+</body>
+</html>

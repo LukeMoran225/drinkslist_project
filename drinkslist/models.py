@@ -17,13 +17,13 @@ class Drink(models.Model):
     date_added = models.DateField()
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.name
 
 
 class Recipe(models.Model):
     # ID static variable that increments by 1
-    ID = models.IntegerField(primary_key=True)
+    # ID = models.IntegerField(primary_key=True)
     drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
     equipment = models.CharField(max_length=250)
@@ -32,7 +32,7 @@ class Recipe(models.Model):
     picture = models.ImageField(upload_to='recipe_images', blank=True)
 
     def __str__(self):
-        return self.ID
+        return str(self.drink_name) + '' + str(self.id)
 
 
 class Followed(models.Model):
