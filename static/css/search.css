@@ -1,0 +1,28 @@
+.search-txt{
+    position:absolute;
+    top: 40%;
+    left: 30%;
+}
+.search-icon{
+    position:absolute;
+    top:42%;
+    left:63%;
+}
+
+.search-button{
+    border: 0ex;
+    background-color: transparent;
+    cursor: pointer; 
+}
+
+.search-input{
+    width: 600px;
+}
+
+/* .container{
+    text-align:center;
+    display:inline-block;
+    position:absolute;
+    top:0;
+    right:0;
+} */

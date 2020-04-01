@@ -1,84 +1,29 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Drinkslist</title>
-	
-    <!-- main external css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <!-- header css -->
-    <style>
-	.search-txt{
-		position:absolute;
-		height: 50px;
-		width: 600px;
-		top: 40%;
-		left: 30%;
-	}
-	.search-icon{
-		position:absolute;
-		top:42%;
-		left:63%;
-    }
-    
-    .search-button{
-        border: 0ex;
-        background-color: transparent;
-        cursor: pointer; 
-    }
-
-    .search-input{
-        width: 600px;
-    }
-    
-	.container{
-		text-align:center;
-		display:inline-block;
-		position:absolute;
-		top:0;
-		right:0;
-    }
-    </style>
-    
-</head>
+{% extends 'drinkslist/base.html' %}
 
 
-<body>
-    <h1>Drinkslist Home Page</h1>
-	<div class="container">
-		<input type="button" onclick="window.location.href='/drinkslist/login/';" value="Login" />
-		<input type="button" onclick="window.location.href='/drinkslist/register/';" value="Register" />
-    </div>
-	
-    <div>
-        <a href="/drinkslist/about/">About</a><br />
-        <a href="/drinkslist/contactus/">Contact Us</a><br />
-    </div>
-
+{% block title_block %}
+    Homepage
+{% endblock %}
+    
+{% block body_block %}
     <!-- searching part -->
-    <div>
-        <div class="search-txt input-group mb-3">
-            <div class="input-group-prepend">
-                <select class="btn btn-outline-secondary dropdown-toggle" name="search-selection" id="search-selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="dropdown-menu">
-                        <option class="dropdown-item" value="static">static</option>
-                        <option class="dropdown-item" value="google">google</option>
-                    </div>
-                </select>
-                <div class="input-group-prepend">
-                    {% csrf_token %}
-                    <input class="search-input form-control" type="text" name="query" id="query" placeholder="Type to search">
-                    <button class="search-button" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-
+    <div class="search-txt input-group mb-3">
+        <div class="input-group-prepend">
+            <select class="btn btn-outline-secondary dropdown-toggle" name="search-selection" id="search-selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown-menu">
+                    <option class="dropdown-item" value="static">static</option>
+                    <option class="dropdown-item" value="google">google</option>
                 </div>
+            </select>
+            <div class="input-group-prepend">
+                {% csrf_token %}
+                <input class="search-input form-control" type="text" name="query" id="query" placeholder="Type to search">
+                <button class="search-button" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
         </div>
     </div>
-
 
     <!-- POPUP AJAX WINDOW HERE -->
     <div class="gsc-results-wrapper-overlay gsc-results-wrapper-visible" style="display: none;" id="dialog">
@@ -86,7 +31,7 @@
         <h2>Light Searching Result</h2>
     <div class="gsc-results-close-btn gsc-results-close-btn-visible" id="exit_btn"></div>
     <div id="search-result" class="list-group">
-        <!-- BOOTSTRAP FORMAT -->
+    <!-- BOOTSTRAP FORMAT -->
     {% if result_list %}
         <h2>Results</h2>
         <div class="list-group" >
@@ -113,19 +58,4 @@
     <div class="gcse-search" style="display: none;"></div>
     </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}" crossorigin="anonymous">
-    </script>
-    <script src="https://kit.fontawesome.com/fc2a073466.js" crossorigin="anonymous"></script>
-    <script src="{% static 'css/gsc.css' %}" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <!-- User Defined JS & AJAX -->
-    <script src="{% static 'js/search-ajax.js' %}" crossorigin="anonymous"></script>
-
-    
-</body>
-</html>
+{% endblock %}

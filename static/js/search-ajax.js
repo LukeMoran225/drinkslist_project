@@ -1,21 +1,15 @@
 $(document).ready(function(){
-    $('.search-button').mouseenter(function(){
-        $(this).css("color","#007bff");
-    });
-   
-    $('.search-button').mouseleave(function(){
-        $(this).css("color","black");
-    });
-    
-    $('.search-button').click(function(){
+
+    // several different events - sharing func
+    function search(){
         // AJAX
         var selection = $('#search-selection').val();
         var query = $('#query').val();
         console.log(selection);
         console.log(query);
-
+    
         // CSRF FAILS WHILE POST METHOD
-
+    
         // var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
         // // var url = $('#user-forms').attr('action');
         // var xml = new XMLHttpRequest();
@@ -29,7 +23,7 @@ $(document).ready(function(){
         // xml.send('search-selection',selection);
         // xml.send('csrfmiddlewaretoken',csrfmiddlewaretoken);
         // xml.send();
-
+    
         $.ajax({
             url: '/drinkslist/search/',
             type: 'POST',
@@ -39,7 +33,6 @@ $(document).ready(function(){
                 if($('#dialog').css("display")=="none"){
                     $('#dialog').show();
                 }
-                
                 var raw;
                 if (data.length>0){
                     // css still needed to be done
@@ -65,7 +58,49 @@ $(document).ready(function(){
                 alert('No Result Found' + data);
             }
         })
+    }
+
+    // change the fixed placeholder
+    var placeholder = $('#query').attr("placeholder");
+    $('#query').on({
+        click:function(){
+            $(this).attr("placeholder"," ");
+        },
+        blur:function(){
+            $(this).attr("placeholder",placeholder);
+        },
+        keypress:function(event){
+            // check whether the text field is empty
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+                if($(this).val().length<1){
+                    alert("The text field is empty!");
+                    return false;
+                }else{
+                    search();
+                }
+            }
+        }
     });
+
+    $('.search-button').on({
+        'mouseenter':function(){
+            $(this).css("color","#007bff");
+        },
+        'mouseleave':function(){
+            $(this).css("color","black");
+        },
+        click:function(event){
+             // check whether the text field is empty
+            if($("#query").val().length<1){
+                alert("The text field is empty!");
+                return false;
+            }else{
+                search();
+            }
+        },
+    });
+    
 
     $('#exit_btn').click(function(){
         $('#dialog').hide();
@@ -85,3 +120,4 @@ $(document).ready(function(){
 //         });
 //     }
 // });
+
