@@ -33,10 +33,13 @@
             </span>
         </nav>
         <div class="btn-group " role="group" aria-label="Basic example">
-            {% block nav_button_block %}
-            <a href="{% url 'drinkslist:login' %}"><button type="button" class="btn btn-secondary active">Login</button></a>
-            <a href="{% url 'drinkslist:register' %}"><button type="button" class="btn btn-dark btn-secondary active" >Register</button></a>
-            {% endblock %}
+			{% if user.is_authenticated %}
+			<li><a style="color:white">Hello,{{user.username}}</li>
+			<li><a href="{% url 'drinkslist:logout' %}"><button type="button" class="btn btn-secondary active">Logout</button></a></li>
+			{% else %}
+            <li><a href="{% url 'drinkslist:login' %}"><button type="button" class="btn btn-secondary active">Login</button></a></li>
+            <li><a href="{% url 'drinkslist:register' %}"><button type="button" class="btn btn-dark btn-secondary active" >Register</button></a></li>
+            {% endif %}
         </div>
     </nav>
 
