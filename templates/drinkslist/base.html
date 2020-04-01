@@ -42,12 +42,16 @@
 
     <!-- main container -->
     <div class="container">
+        
+        {% block style_block %}
         <div class="d-flex justify-content-center m-5" >
             <div class="d-inline-flex m-5">
                 {% block body_block %}
                 {% endblock %}
             </div>
         </div>
+        {% endblock %}
+            
     </div>
     
     <!-- footer -->

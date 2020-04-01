@@ -17,6 +17,16 @@ $(document).ready(function(){
         }
     };
 
-    $('#reminder').attr("class","mr-5");
+    $('.helptext').hide();
+    $('.helptext').css("color","#007bff");
+
+
+    $('#id_username').on({
+        focus:function(){
+            if($('.helptext').hide()){
+                $('.helptext').show();
+            }
+        }
+    })
 
 });

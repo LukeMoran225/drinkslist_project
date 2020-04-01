@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from drinkslist.forms import UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
+from django.views import View
 import json
 
 
@@ -15,15 +16,13 @@ def index(request):
     return render(request, 'drinkslist/index.html',context_dict)
 
 
-def about(request):
-    return HttpResponse("Drinks list about page.")
+class AboutView(View):
+    def get(self,request):
+        return render(request,'drinkslist/about.html')
 
 
 def contactus(request):
     return HttpResponse("Drinks list contact us page")
-
-
-
 
 
 def register(request):

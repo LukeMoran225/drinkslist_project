@@ -1,4 +1,4 @@
-{% extends 'drinkslist/base.html' %}
+{% extends 'drinkslist/jumbotron.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -15,8 +15,8 @@
 {% endblock %}
 
 
-{% block body_block %}
-
+{% block p_block %}
+    <h1 id="reminder" class="display-4 mb-5">Login</h1>
     <form class="form-control" id="login_form" method="post" action="{% url 'drinkslist:login' %}">
         {% csrf_token %}
         <div class="form-group">

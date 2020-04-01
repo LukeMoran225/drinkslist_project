@@ -1,4 +1,4 @@
-{% extends 'drinkslist/base.html' %}
+{% extends 'drinkslist/jumbotron.html' %}
 {% load staticfiles %}
 
 {% block heading_block %}
@@ -14,12 +14,13 @@
     <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
 {% endblock %}
 
-{% block body_block %}
+
+{% block p_block %}
 
     {% if registered %}
-        <strong id="reminder">Registered</strong>
+        <h1 id="reminder" class="display-4 mb-5">Registered</h1>
     {% else %}
-        <Strong id="reminder">Register Here</Strong>
+        <h1 id="reminder" class="display-4 mb-5">Register Here</h1>
         
         <form class="form-control" id="user_form" method="post" action="{% url 'drinkslist:register' %}"
         enctype="multipart/form-data">

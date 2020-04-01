@@ -1,13 +1,13 @@
-{% extends 'drinkslist/base.html' %}
+{% extends 'drinkslist/jumbotron.html' %}
 
 
 {% block title_block %}
     Homepage
 {% endblock %}
     
-{% block body_block %}
+{% block p_block %}
     <!-- searching part -->
-    <div class="search-txt input-group mb-3">
+    <div class="input-group mb-3" style="margin-top: 50%;">
         <div class="input-group-prepend">
             <select class="btn btn-outline-secondary dropdown-toggle" name="search-selection" id="search-selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="dropdown-menu">
@@ -28,7 +28,7 @@
     <!-- POPUP AJAX WINDOW HERE -->
     <div class="gsc-results-wrapper-overlay gsc-results-wrapper-visible" style="display: none;" id="dialog">
         <!-- better to perform ajax to render the results -->
-        <h2>Light Searching Result</h2>
+        <h2>Lightweight Searching Result</h2>
     <div class="gsc-results-close-btn gsc-results-close-btn-visible" id="exit_btn"></div>
     <div id="search-result" class="list-group">
     <!-- BOOTSTRAP FORMAT -->
@@ -57,5 +57,28 @@
     <script async src="https://cse.google.com/cse.js?cx=010938217216454462722:unpmdeb1lhb"></script>
     <div class="gcse-search" style="display: none;"></div>
     </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="winCenter" tabindex="-1" role="dialog" aria-labelledby="winCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="winLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 {% endblock %}
