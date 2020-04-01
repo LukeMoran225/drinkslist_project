@@ -26,7 +26,7 @@
     <nav class="navbar navbar-dark bg-dark sticky-top ">
         <nav>
             <!-- BASE TEMPLATE PREPARATION - Drinkslist - {{name}} -->
-            <span class="navbar-brand mb-0 h1">Drinkslist - 
+            <span class="navbar-brand mb-0 h1" id="he">Drinkslist - 
             {% block heading_block %}
                 Homepage
             {% endblock %}
@@ -41,11 +41,11 @@
     </nav>
 
     <!-- main container -->
-    <div class="container animated fadeIn">
+    <div class="container">
         
         {% block style_block %}
         <div class="d-flex justify-content-center m-5" >
-            <div class="d-inline-flex m-5">
+            <div class="d-inline-flex m-5 animated fadeIn">
                 {% block body_block %}
                 {% endblock %}
             </div>

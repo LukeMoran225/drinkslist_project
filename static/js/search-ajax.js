@@ -19,6 +19,7 @@ $(document).ready(function(){
             data: {'search-selection': selection, 'query': query, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()},
             success: function (data) {
                 $('#active_btn').click();
+                $('#check').attr("class","jumbotron");
                 var raw;
                 if (data.length>0){
                     // css still needed to be done
@@ -67,6 +68,7 @@ $(document).ready(function(){
                 if($(this).val().length<1){
                     // alert("The text field is empty!");
                     // return false;
+                    $('#check').attr("class","jumbotron");
                     $('#active_btn').click();
                     $("#modal_title").text("Error");
                     $(".modal-body").text("The text field is empty!");
@@ -89,6 +91,7 @@ $(document).ready(function(){
             $(".modal-body").text("");
             // check whether the text field is empty
             if($("#query").val().length<1){
+                $('#check').attr("class","jumbotron");
                 $('#active_btn').click();
                 $("#modal_title").text("Error");
                 $(".modal-body").text("The text field is empty!");
