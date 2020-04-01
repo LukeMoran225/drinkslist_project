@@ -10,9 +10,7 @@ import json
 
 
 def index(request):
-    
     context_dict = {}
-
     return render(request, 'drinkslist/index.html',context_dict)
 
 
@@ -20,9 +18,8 @@ class AboutView(View):
     def get(self,request):
         return render(request,'drinkslist/about.html')
 
-
 def contactus(request):
-    return HttpResponse("Drinks list contact us page")
+    return render(request,'drinkslist/contactus.html')
 
 
 def register(request):

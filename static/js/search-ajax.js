@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     // several different events - sharing func
     function search(){
         // AJAX
@@ -19,9 +18,6 @@ $(document).ready(function(){
             dataType: 'JSON',
             data: {'search-selection': selection, 'query': query, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()},
             success: function (data) {
-                // if($('#dialog').css("display")=="none"){
-                //     $('#dialog').show();
-                // }
                 $('#active_btn').click();
                 var raw;
                 if (data.length>0){

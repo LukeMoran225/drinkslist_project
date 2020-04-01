@@ -17,14 +17,30 @@ $(document).ready(function(){
         }
     };
 
-    $('.helptext').hide();
-    $('.helptext').css("color","#007bff");
+    var helper = $('.helptext');
+    var parent_form = $('#user_form');
+    if(parent_form.attr("class","form-control animated fadeIn")){
+        parent_form.attr("class","form-control");
+    }
+    helper.hide();
+    helper.css("color","#007bff");
     $('#id_username').on({
-        focus:function(){
+        "focus":function(){
             if($('.helptext').hide()){
                 $('.helptext').show();
+                parent_form.attr("class","form-control animated fadeIn");
             }
         }
     })
+    
 
 });
+
+// $(document).mousemove(function(){
+//     var parent_form = $('#user_form');
+//     var timeout=setTimeout(function () {
+//         if(parent_form.attr("class","form-control animated fadeIn")){
+//             parent_form.attr("class","form-control");
+//         }
+//     }, 1200);
+// });
