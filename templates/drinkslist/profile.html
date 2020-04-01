@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>Profile</title>
+	<style>
+		.home-but{
+		position:absolute;
+		top:0;
+		right:0;
+	}
+	</style>
+</head>
+<body>
+<h1>User profile</h1>
+<input class="home-but"type="button" class="btn btn-lg btn-success" onclick="window.location.href='index.html';" value="Home" />
+<div class="content-section">
+	<div class="media">
+		<img class="user-img" src="{{user.profile.image.url}}">
+		<div class="body">
+			<h2 class="username">{{user.username}}</h2>
+		</div>
+	</div>
+</body>
+</html>
