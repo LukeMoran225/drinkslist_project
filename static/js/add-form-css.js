@@ -19,8 +19,6 @@ $(document).ready(function(){
 
     $('.helptext').hide();
     $('.helptext').css("color","#007bff");
-
-
     $('#id_username').on({
         focus:function(){
             if($('.helptext').hide()){

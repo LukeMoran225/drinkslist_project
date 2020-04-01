@@ -11,18 +11,7 @@ $(document).ready(function(){
         // CSRF FAILS WHILE POST METHOD
     
         // var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
-        // // var url = $('#user-forms').attr('action');
-        // var xml = new XMLHttpRequest();
-        // xml.onreadystatechange = function(){
-        //     if(this.readyState==4&&this.status==200){   
         //         document.getElementById("render").innerHTML = this.responseText;
-        //     }
-        // }
-        // xml.open("POST",'/drinkslist/',true);
-        // xml.send('query',query);
-        // xml.send('search-selection',selection);
-        // xml.send('csrfmiddlewaretoken',csrfmiddlewaretoken);
-        // xml.send();
     
         $.ajax({
             url: '/drinkslist/search/',
@@ -30,9 +19,10 @@ $(document).ready(function(){
             dataType: 'JSON',
             data: {'search-selection': selection, 'query': query, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()},
             success: function (data) {
-                if($('#dialog').css("display")=="none"){
-                    $('#dialog').show();
-                }
+                // if($('#dialog').css("display")=="none"){
+                //     $('#dialog').show();
+                // }
+                $('#active_btn').click();
                 var raw;
                 if (data.length>0){
                     // css still needed to be done
@@ -41,17 +31,20 @@ $(document).ready(function(){
                         var title = data[i]['title'];
                         var link = data[i]['link'];
                         var summary = data[i]['summary'];
-                        raw = $('#search-result').html();
+                        raw = $('.modal-body').html();
                         raw = raw + '<li class="list-group-item"><a style="color:#007bff" class="list-group-item list-group-item-action" href='+ link+' >'+title+'</a>' +' <br />'+''+ summary + '</li><br/>'
-                        $('#search-result').html(raw);
+                        $('.modal-body').html(raw);
                         console.log(raw);
                     };
                     // sorting all the results
-                    $('#search-result').html(raw);
+                    $('.modal-title').html('Lightweight Searching Results');
+                    $('.modal-body').html(raw);
                     console.log(data);
                 }else{
                     // No results found
-                    $('#search-result').html('<li class="list-group-item">'+'No results found, searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google?</li>");
+                    $('.modal-title').html('Lightweight Searching Results');
+                    $('.modal-body').html('<li class="list-group-item">'+'No results found, searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google?</li>");
+                    $('.gcse-search').show();
                 }
             },
             failure: function(data){
@@ -73,16 +66,21 @@ $(document).ready(function(){
             // check whether the text field is empty
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
+                $("#modal_title").text("Processing Ajax");
+                $(".modal-body").text("");
                 if($(this).val().length<1){
-                    alert("The text field is empty!");
-                    return false;
+                    // alert("The text field is empty!");
+                    // return false;
+                    $('#active_btn').click();
+                    $("#modal_title").text("Error");
+                    $(".modal-body").text("The text field is empty!");
                 }else{
                     search();
                 }
             }
         }
     });
-
+    
     $('.search-button').on({
         'mouseenter':function(){
             $(this).css("color","#007bff");
@@ -91,10 +89,13 @@ $(document).ready(function(){
             $(this).css("color","black");
         },
         click:function(event){
-             // check whether the text field is empty
+            $("#modal_title").text("Processing Ajax");
+            $(".modal-body").text("");
+            // check whether the text field is empty
             if($("#query").val().length<1){
-                alert("The text field is empty!");
-                return false;
+                $('#active_btn').click();
+                $("#modal_title").text("Error");
+                $(".modal-body").text("The text field is empty!");
             }else{
                 search();
             }
@@ -110,14 +111,4 @@ $(document).ready(function(){
     });
 
 });
-
-// click other div will close the popup window, not done
-
-// $(document).bind("click",function(){
-//     if($('#dialog').css('display')!="none"){
-//         $('#dialog').mousedown(function(){
-//             $(this).hide();
-//         });
-//     }
-// });
 
