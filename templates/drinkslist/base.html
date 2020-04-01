@@ -33,13 +33,15 @@
             </span>
         </nav>
         <div class="btn-group " role="group" aria-label="Basic example">
-			{% if user.is_authenticated %}
-			<li><a style="color:white">Hello,{{user.username}}</li>
-			<li><a href="{% url 'drinkslist:logout' %}"><button type="button" class="btn btn-secondary active">Logout</button></a></li>
-			{% else %}
-            <li><a href="{% url 'drinkslist:login' %}"><button type="button" class="btn btn-secondary active">Login</button></a></li>
-            <li><a href="{% url 'drinkslist:register' %}"><button type="button" class="btn btn-dark btn-secondary active" >Register</button></a></li>
+            {% block nav_button_block %}
+            {% if user.is_authenticated %}
+            <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
+            <a href="{% url 'auth_logout' %}?next=/drinkslist/"><button type="button" class="btn btn-dark btn-secondary active" >Logout</button></a>
+            {% else %}
+            <a href="{% url 'drinkslist:login' %}"><button type="button" class="btn btn-secondary active">Login</button></a>
+            <a href="{% url 'registration_register' %}"><button type="button" class="btn btn-dark btn-secondary active" >Register</button></a>
             {% endif %}
+            {% endblock %}
         </div>
     </nav>
 
@@ -80,6 +82,9 @@
     <!-- User Defined JS & AJAX -->
     <script src="{% static 'js/search-ajax.js' %}" crossorigin="anonymous"></script>
     <script src="{% static 'js/add-form-css.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/login-ajax.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/register-ajax.js' %}" crossorigin="anonymous"></script>
+    
 
 </body>
 </html>

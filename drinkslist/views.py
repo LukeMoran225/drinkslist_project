@@ -1,11 +1,11 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response,redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse
-from django.shortcuts import redirect
 from drinkslist.forms import UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
-from django.contrib.auth import logout
 from django.views import View
 import json
 
@@ -52,7 +52,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'drinkslist/register.html',
+    return render(request, 'registration/registration_form.html',
                   context={'user_form': user_form,
                            'profile_form': profile_form,
                            'registered': registered})
@@ -76,6 +76,54 @@ def user_login(request):
         return render(request,'drinkslist/login.html')
 
 
+def user_logout(request):
+    logout(request)
+    return redirect('/')
+
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+    if form.is_valid():
+        user_profile = form.save(commit=False)
+        user_profile.user = request.user
+        user_profile.save()
+        return redirect(reverse('drinkslist:index'))
+    else:
+        print(form.errors)
+
+    context_dict = {'form': form}
+    return render(request, 'drinkslist/profile_registration.html', context_dict)
+
+
+class RegisterProfile(View):
+    @method_decorator(login_required)
+    def post(self,request):
+        context_dict = {}
+        form = UserProfileForm()
+        form = UserProfileForm(request.POST, request.FILES)
+        # check whether all the form fields are filled correctly
+        if form.is_valid():
+            # give the time to manipulate the new instance before commiting
+            user_profile = form.save(commit=False)
+            # refresh current user
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect(reverse('drinkslist:index'))
+        else:
+            print(form.errors)
+
+        context_dict = {'form':form}
+        return render(request, 'drinkslist/profile_registration.html', context_dict)
+    
+    @method_decorator(login_required)
+    def get(self,request):
+        form = UserProfileForm()
+        context_dict = {'form':form}
+        return render(request, 'drinkslist/profile_registration.html', context_dict)
+
 # AJAX Applied - search helper function : return the searching results of google & Site
 def search(request):
     result_list = []
@@ -94,6 +142,20 @@ def search(request):
 
     return HttpResponse(json.dumps(result_list))
 
-def user_logout(request):
-    logout(request)
-    return redirect('/')
+# Ajax Applied - test user input in login page
+def check_login(request):
+    if request.method =='POST':
+        username= request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username,password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return redirect(reverse('drinkslist:index'))
+            else:
+                return HttpResponse("Your Drinkslist account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied")
+    # return HttpResponse(json.dumps(result_list))
+

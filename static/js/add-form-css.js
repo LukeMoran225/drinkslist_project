@@ -1,6 +1,17 @@
 $(document).ready(function(){
-// dynamicly adding css to the django form ,avoiding changing the template tags
+
+    // dynamicly adding css to the django form ,avoiding changing the template tags
     var input_sets =  $('#user_form').find("input");
+    var error_helper = $('#user_form').find("ul");
+    
+    var helper = $('.helptext');
+    helper.hide();
+    var parent_form = $('#user_form');
+    helper.css("color","#007bff");
+
+    for (var i=0;i<error_helper.length;i++){
+        $(error_helper).css("color","#007bff");
+    }
     for (var i=0;i<input_sets.length;i++){
         var each = input_sets[i];
         var type = $(each).attr('type');
@@ -17,35 +28,24 @@ $(document).ready(function(){
         }
     };
 
-    var helper = $('.helptext');
-    var parent_form = $('#user_form');
-    // if(parent_form.attr("class","form-control animated fadeIn")){
-        // parent_form.attr("class","form-control");
-    // }
-    helper.hide();
-    helper.css("color","#007bff");
-    $('#id_username').on({
-        "focus":function(){
+    
+    $('#check_btn').on({
+        "click":function(){
             if($('.helptext').hide()){
                 $('.helptext').show();
-                parent_form.attr("class","form-control animated fadeIn");
+            }
+            if($(error_helper).hide()){
+                $(error_helper).show();
             }
         }
     })
 
-    // if($('.search-button')!= undefined){
-    //     var check = $('#container').attr("class","jumbotron");
-    //     $('.input-group-prepend').attr("class","input-group-prepend animated fadeIn");
-    // }
-    
+    $('.custom-file-input').on('change',function(){ 
+        let fileName = $(this).val().split('\\').pop(); 
+        $('.custom-file-label').addClass("selected").html(fileName); 
+    });
+   
 
 });
 
-// $(document).mousemove(function(){
-//     var parent_form = $('#user_form');
-//     var timeout=setTimeout(function () {
-//         if(parent_form.attr("class","form-control animated fadeIn")){
-//             parent_form.attr("class","form-control");
-//         }
-//     }, 1200);
-// });
+

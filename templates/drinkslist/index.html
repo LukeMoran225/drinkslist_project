@@ -4,7 +4,17 @@
 {% block title_block %}
     Homepage
 {% endblock %}
-    
+
+
+{% block heading_block %}
+  {% if user.is_authenticated %}
+  Welcome {{ user.username }}! We got all recipe!
+  {% else %}
+  Welcome!
+  {% endif %}
+{% endblock  %}
+  
+
 {% block p_block %}
   <!-- searching part -->
   <div class="input-group mb-3" style="margin-top: 50%;">

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    
     // several different events - sharing func
     function search(){
         // AJAX
@@ -41,6 +42,7 @@ $(document).ready(function(){
                     // No results found
                     $('.modal-title').html('Lightweight Searching Results');
                     $('.modal-body').html('<li class="list-group-item">'+'No results found, searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google?</li>");
+                    $('.gsc-input').attr("value",query);
                     $('.gcse-search').show();
                 }
             },

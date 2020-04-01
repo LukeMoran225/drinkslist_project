@@ -4,3 +4,6 @@
     right:0;
 }
 
+.custom-file-input ~ .custom-file-label::after {
+    content: "Button Text";
+}
