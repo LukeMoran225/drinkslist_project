@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from drinkslist.forms import UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
+from django.contrib.auth import logout
 from django.views import View
 import json
 
@@ -92,3 +93,7 @@ def search(request):
                 result_list = run_google_search(query)
 
     return HttpResponse(json.dumps(result_list))
+
+def user_logout(request):
+    logout(request)
+    return redirect('/')
