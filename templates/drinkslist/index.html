@@ -7,22 +7,20 @@
     
 {% block body_block %}
     <!-- searching part -->
-    <div>
-        <div class="search-txt input-group mb-3">
-            <div class="input-group-prepend">
-                <select class="btn btn-outline-secondary dropdown-toggle" name="search-selection" id="search-selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="dropdown-menu">
-                        <option class="dropdown-item" value="static">static</option>
-                        <option class="dropdown-item" value="google">google</option>
-                    </div>
-                </select>
-                <div class="input-group-prepend">
-                    {% csrf_token %}
-                    <input class="search-input form-control" type="text" name="query" id="query" placeholder="Type to search">
-                    <button class="search-button" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
+    <div class="search-txt input-group mb-3">
+        <div class="input-group-prepend">
+            <select class="btn btn-outline-secondary dropdown-toggle" name="search-selection" id="search-selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown-menu">
+                    <option class="dropdown-item" value="static">static</option>
+                    <option class="dropdown-item" value="google">google</option>
                 </div>
+            </select>
+            <div class="input-group-prepend">
+                {% csrf_token %}
+                <input class="search-input form-control" type="text" name="query" id="query" placeholder="Type to search">
+                <button class="search-button" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
         </div>
     </div>

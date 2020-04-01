@@ -1,7 +1,6 @@
 {% extends 'drinkslist/base.html' %}
 {% load staticfiles %}
 
-
 {% block heading_block %}
     Register
 {% endblock %}
@@ -15,22 +14,30 @@
     <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
 {% endblock %}
 
-
 {% block body_block %}
 
     {% if registered %}
-        <strong>Registered</strong>
+        <strong id="reminder">Registered</strong>
     {% else %}
-        <Strong>Register Here</Strong>
-        <form id="user_form" method="post" action="{% url 'drinkslist:register' %}"
+        <Strong id="reminder">Register Here</Strong>
+        
+        <form class="form-control" id="user_form" method="post" action="{% url 'drinkslist:register' %}"
         enctype="multipart/form-data">
             {% csrf_token %}
+            <div class="form-group">
+                {{ user_form.as_p}}
+                {{ profile_form.as_p}}
+                
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </div>
 
-            {{ user_form.as_p}}
-            {{ profile_form.as_p}}
-
-            <input type="submit" name="submit" value="Register" />
+            
         </form>
+        
     {% endif %}
 
 {% endblock %}

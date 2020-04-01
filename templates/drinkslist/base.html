@@ -12,6 +12,7 @@
 
     <!-- main external css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://v4-alpha.getbootstrap.com/examples/signin/signin.css"> -->
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
@@ -40,8 +41,14 @@
     </nav>
 
     <!-- main container -->
-    {% block body_block %}
-    {% endblock %}
+    <div class="container">
+        <div class="d-flex justify-content-center m-5" >
+            <div class="d-inline-flex m-5">
+                {% block body_block %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
     
     <!-- footer -->
     <nav class="py-2 navbar fixed-bottom bg-secondary">
@@ -65,6 +72,7 @@
 
     <!-- User Defined JS & AJAX -->
     <script src="{% static 'js/search-ajax.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/add-form-css.js' %}" crossorigin="anonymous"></script>
 
 </body>
 </html>

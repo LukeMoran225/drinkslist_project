@@ -86,7 +86,6 @@ def search(request):
     if request.method == 'POST':
         # search engine selection
         selection = request.POST['search-selection']
-        print(selection)
         # user query string
         query = request.POST['query'].strip()
         if query:
@@ -95,7 +94,5 @@ def search(request):
                 pass
             else:
                 result_list = run_google_search(query)
-
-    # print(result_list)
 
     return HttpResponse(json.dumps(result_list))
