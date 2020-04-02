@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import date
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -14,7 +14,7 @@ class UserProfile(models.Model):
 
 class Drink(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    date_added = models.DateField()
+    date_added = models.DateField(default=date.today)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -48,7 +48,7 @@ class Followed(models.Model):
 
 class Comment(models.Model):
     made_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_added = models.DateField()
+    date_added = models.DateField(default=date.today)
     for_recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     comment = models.CharField(max_length=250)
 

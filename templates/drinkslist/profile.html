@@ -17,11 +17,11 @@
 			<img class="rounded round-icon" src="{{ MEDIA_URL }}{{ user_profile.picture }}"
             width="300"
             height="300"
-            alt="{{ selected_user.username }}'s profile image" />
+            alt="{{ selected_user.username }}'s profile image" id="pic" />
             <br />
 		{% else %}
             <img class="rounded round-icon" width="64" height="64"
-            src="{% static 'images/default.png' %}"/>
+            src="{% static 'images/default.png' %}" id="pic" />
             <br />
 		{% endif %}
 			<h1 class="display-4">{{ selected_user.username }}'s Profile</h1>
@@ -32,18 +32,18 @@
 		<p>
 		{% if selected_user == user %}
 		<!-- current user: edit profile -->
-		<!-- <form method="post" action="." enctype="multipart/form-data" id="user_form" class="form-control"> -->
-		<div class="form-control" id="user_form">
+    <div class="form-group">
+    <div class="form-control" id="user_form">
+		<form method="post" action="." enctype="multipart/form-data" id="user_form">
 		{% csrf_token %}
 		{{ form.as_p }}
-		<div class="form-group">
 			<div class="col-sm-15">
-				<button type="submit" class="btn btn-primary mt-3">Update</button>
-				<button type="submit" class="btn btn-danger mt-3" style="float:right" id="rm-btn" value="{{user.id}}" data="{% url 'drinkslist:user_delete' %}">Remove Account</button>
-			</div>
+				<button type="submit" class="btn btn-primary mt-3" value="{{user.username}}" id="up-btn" data="{% url 'drinkslist:profile' user.username %}">Update</button>
+        <button type="button" class="btn btn-danger mt-3" style="float:right" id="rm-btn" value="{{user.id}}" data="{% url 'drinkslist:user_delete' %}">Remove Account</button>
+      </form>
+    </div>
 		</div>
-		</div>
-		<!-- </form> -->
+  </div>
 		</p>
 		{% else %}
 		<p>
@@ -51,7 +51,7 @@
 		<a href="{{ user_profile.website }}">{{ user_profile.is_professional }}</a>
 		</p>
 		{% endif %}
-		</div>
+    </div>
 </div>
 
 <!-- POPUP AJAX WINDOW HERE -->

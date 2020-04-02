@@ -17,6 +17,7 @@ $(document).ready(function(){
         $.ajax({
             url: url,
             type: 'POST',
+            asynchronous:false,
             data: {'id': id,'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()},
             success: function(data){
                 console.log(data);

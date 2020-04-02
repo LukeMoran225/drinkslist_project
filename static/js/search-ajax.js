@@ -100,6 +100,25 @@ $(document).ready(function(){
     });
     
 
+    $('.search-button').on({
+        'mouseenter':function(){
+            $(this).css("color","#007bff");
+        },
+        'mouseleave':function(){
+            $(this).css("color","black");
+        },
+        click:function(event){
+             // check whether the text field is empty
+            if($("#query").val().length<1){
+                alert("The text field is empty!");
+                return false;
+            }else{
+                search();
+            }
+        },
+    });
+    
+
     $('#exit_btn').click(function(){
         $('#dialog').hide();
         // clean the searching results, avoiding repertability

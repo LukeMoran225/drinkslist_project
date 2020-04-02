@@ -9,7 +9,7 @@ from drinkslist.google_search import run_google_search
 from django.views import View
 import json
 from django.contrib.auth.models import User
-from drinkslist.models import UserProfile,Recipe
+from drinkslist.models import Recipe, UserProfile
 
 def index(request):
     context_dict = {}
@@ -123,7 +123,10 @@ class RegisterProfile(View):
         context_dict = {'form':form}
         return render(request, 'drinkslist/profile_registration.html', context_dict)
 
+
+
 class ProfileView(View):
+   
     # avoid repeating [DRY]
     def get_user_details(self, username):
         try:
@@ -134,6 +137,7 @@ class ProfileView(View):
         user_profile = UserProfile.objects.get_or_create(user=user)[0]
         # current seleted detailed form
         form = UserProfileForm({'is_professional': user_profile.is_professional,'picture': user_profile.picture})
+        print(form)
         return (user, user_profile, form)
 
     @method_decorator(login_required)
@@ -152,15 +156,18 @@ class ProfileView(View):
     @method_decorator(login_required)
     def post(self, request, username):
          # username from url, paramised view
+        context_dict = {}
         try:
             (user, user_profile, form) = self.get_user_details(username)
         except TypeError:
+            print("error")
             return redirect(reverse('drinkslist:index'))
         
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             # refresh the form and commit 
             form.save(commit=True)
+            print(form,"saved")
             return redirect('drinkslist:profile', user.username)
         else:
             print(form.errors)
@@ -225,7 +232,7 @@ def user_delete(request):
             return HttpResponse("Deleted Successfully!")
     else:
             return HttpResponse("Access Fobbidden")
-
+            
 def recipe_list(request):
     recipe = Recipe.objects.all()
     context = {
