@@ -19,11 +19,13 @@ class UserProfile(models.Model):
 class Drink(models.Model):
     name = models.CharField(max_length=100, unique=True)
     date_added = models.DateField(default=date.today)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
+        super().save(self, *args, **kwargs)
         self.slug = slugify(self.name)
+        self.added_by = self.created_by
         super(Drink, self).save(*args, **kwargs)
 
     def __str__(self):

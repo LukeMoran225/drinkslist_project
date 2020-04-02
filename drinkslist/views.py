@@ -255,14 +255,18 @@ def drinks(request):
     }
     return render(request,'drinkslist/drinks.html', context = context_dict)
 
-
+@login_required
 def create_recipe(request):
+    instance = Recipe(added_by=request.user)
+    form = RecipeCreateForm(instance=instance)
     if request.method == 'POST':
-        form =RecipeCreateForm(request.POST)
+        form = RecipeCreateForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.added_by = request.user
-            post.save()
+            recipe = form.save(commit=False)
+            recipe.added_by = request.user
+            recipe.save()
+
+            return redirect('/drinkslist/')
     else:
         form = RecipeCreateForm()
     context = {

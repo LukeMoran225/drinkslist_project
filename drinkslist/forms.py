@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.http import request
 from drinkslist.models import Recipe, UserProfile
 
 
@@ -18,6 +19,9 @@ class UserProfileForm(forms.ModelForm):
 
 
 class RecipeCreateForm(forms.ModelForm):
+    added_by = forms.CharField(widget=forms.HiddenInput())
+
+
     class Meta:
         model = Recipe
         fields = (
