@@ -7,3 +7,15 @@
 .custom-file-input ~ .custom-file-label::after {
     content: "Button Text";
 }
+
+.round-icon{
+    border-radius: 50% !important;
+    border: 3px solid grey;
+    height: 150px;
+    width: 150px;
+}
+
+.round-icon-s{
+    border-radius: 50% !important;
+    border: 2px solid grey;
+}

@@ -8,12 +8,12 @@ from drinkslist.forms import UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
 from django.views import View
 import json
-
+from django.contrib.auth.models import User
+from drinkslist.models import UserProfile
 
 def index(request):
     context_dict = {}
     return render(request, 'drinkslist/index.html',context_dict)
-
 
 class AboutView(View):
     def get(self,request):
@@ -21,7 +21,6 @@ class AboutView(View):
 
 def contactus(request):
     return render(request,'drinkslist/contactus.html')
-
 
 def register(request):
     registered = False
@@ -123,6 +122,64 @@ class RegisterProfile(View):
         form = UserProfileForm()
         context_dict = {'form':form}
         return render(request, 'drinkslist/profile_registration.html', context_dict)
+
+class ProfileView(View):
+    # avoid repeating [DRY]
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+        
+        user_profile = UserProfile.objects.get_or_create(user=user)[0]
+        # current seleted detailed form
+        form = UserProfileForm({'is_professional': user_profile.is_professional,'picture': user_profile.picture})
+        return (user, user_profile, form)
+
+    @method_decorator(login_required)
+    def get(self, request, username):
+        # username from url, paramised view
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('drinkslist:index'))
+        context_dict = {'user_profile': user_profile,
+        'selected_user': user,
+        'form': form}
+        return render(request, 'drinkslist/profile.html', context_dict)
+    
+    # update profile
+    @method_decorator(login_required)
+    def post(self, request, username):
+         # username from url, paramised view
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('drinkslist:index'))
+        
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            # refresh the form and commit 
+            form.save(commit=True)
+            return redirect('drinkslist:profile', user.username)
+        else:
+            print(form.errors)
+            # return old details
+            context_dict = {'user_profile': user_profile,
+            'selected_user': user,
+            'form': form}
+            return render(request, 'drinkslist/profile.html', context_dict)
+
+class ListProfilesView(View):
+    @method_decorator(login_required)
+    def get(self,request):
+        profiles = UserProfile.objects.all()
+
+        return render(request,'drinkslist/list_profiles.html',{'user_profile_list':profiles})
+
+"""
+AJAX HELPER FUNCTION
+"""
 
 # AJAX Applied - search helper function : return the searching results of google & Site
 def search(request):

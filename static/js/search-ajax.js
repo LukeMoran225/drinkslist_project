@@ -8,10 +8,6 @@ $(document).ready(function(){
         console.log(selection);
         console.log(query);
     
-        // CSRF FAILS WHILE POST METHOD
-    
-        // var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
-        //         document.getElementById("render").innerHTML = this.responseText;
     
         $.ajax({
             url: '/drinkslist/search/',
