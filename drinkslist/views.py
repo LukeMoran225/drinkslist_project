@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
-from drinkslist.forms import UserForm, UserProfileForm
+from drinkslist.forms import RecipeCreateForm, UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
 from django.views import View
 import json
@@ -138,8 +138,7 @@ class ProfileView(View):
         
         user_profile = UserProfile.objects.get_or_create(user=user)[0]
         # current seleted detailed form
-        form = UserProfileForm({'is_professional': user_profile.is_professional,'picture': user_profile.picture})
-        print(form)
+        form = UserProfileForm({'is_professional': user_profile.is_professional,'is_private':user_profile.is_private,'picture': user_profile.picture})
         return (user, user_profile, form)
 
     @method_decorator(login_required)
@@ -169,7 +168,6 @@ class ProfileView(View):
         if form.is_valid():
             # refresh the form and commit 
             form.save(commit=True)
-            print(form,"saved")
             return redirect('drinkslist:profile', user.username)
         else:
             print(form.errors)
@@ -182,7 +180,7 @@ class ProfileView(View):
 class ListProfilesView(View):
     @method_decorator(login_required)
     def get(self,request):
-        profiles = UserProfile.objects.all()
+        profiles = UserProfile.objects.filter(is_private=False)
 
         return render(request,'drinkslist/list_profiles.html',{'user_profile_list':profiles})
 
@@ -256,3 +254,25 @@ def drinks(request):
         'drinks': drink_list,
     }
     return render(request,'drinkslist/drinks.html', context = context_dict)
+
+
+def create_recipe(request):
+    if request.method == 'POST':
+        form =RecipeCreateForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.added_by = request.user
+            post.save()
+    else:
+        form = RecipeCreateForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'drinkslist/create_recipe.html', context)
+
+def  recipe_detail(request, id):
+    recipe = Recipe.objects.get(id=id)
+    context = {
+        'Recipe':recipe,
+    }
+    return render(request, 'drinkslist/recipe_detail.html', context)

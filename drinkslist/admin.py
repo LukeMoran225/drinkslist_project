@@ -21,7 +21,7 @@ class RatingAdmin(admin.ModelAdmin):
     list_display = ('made_by','for_recipe','rating')
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user','is_professional','picture')
+    list_display = ('user','is_professional','picture','is_private')
 
 
 admin.site.register(UserProfile,UserProfileAdmin)

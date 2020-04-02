@@ -34,7 +34,7 @@ def populate():
     drinks = {'Daiquiri': {'recipes': daiquiri_recipes,'username':'visitor1'},
               'Toronto': {'recipes': toronto_recipes,'username':'visitor2'}}
 
-    u = User.objects.get_by_natural_key('Luke1')
+    # u = User.objects.get_by_natural_key('Luke1')
     users = {
         'visitor1':{'password':'visitor1',
         'email':'visitor1@gmail.com',

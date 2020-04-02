@@ -17,10 +17,10 @@ $(document).ready(function(){
         $.ajax({
             url: url,
             type: 'POST',
-            async: false,
+            async: true,
             data: {'username': username,'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),'is_professional':is_pro,'picture':pic},
             success: function(data){
-                alert(data);
+                alert("Update Successfully!");
                 window.location.replace(url);
                 // document.documentElement.innerHTML = data;
             },

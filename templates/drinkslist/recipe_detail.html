@@ -9,17 +9,21 @@
 {% block heading_block %}
     Recipe List
 {% endblock %}
-    
+
 
 {% block body_block %}
     <div class="container">
-    
+
     <h1 class="display-4">Recipe List</h1>
     <hr class="my-4">
         {% if Recipe %}
 		{% for r in Recipe %}
-			<a href="#">{{ r.drinkname }}</a>
-			Author:{{ r.added_by }}
+            {{ r.drinkname }}
+			{{ r.added_by }}
+			{{ r.equipment }}
+			{{ r.ingredients }}
+			{{ r.how_to }}
+			{{ r.picture }}
 		{% endfor %}
 		{% endif %}
     </div>

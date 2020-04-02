@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from drinkslist.models import UserProfile
+from drinkslist.models import Recipe, UserProfile
 
 
 class UserForm(forms.ModelForm):
@@ -14,4 +14,17 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('is_professional', 'picture',)
+        fields = ('is_professional', 'is_private','picture')
+
+
+class RecipeCreateForm(forms.ModelForm):
+    class Meta:
+        model = Recipe
+        fields = (
+            'drink_name',
+            'added_by',
+            'equipment',
+            'ingredients',
+            'how_to',
+            'picture',
+        )
