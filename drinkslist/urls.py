@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
     path('profiles/', views.ListProfilesView.as_view(), name='list_profiles'),
     path('check_login/', views.check_login, name='check_login'),#helper func
+    path('user_delete/', views.user_delete, name='user_delete'),#helper func
     path('search/',views.search,name='search'),#helper func
     path('register_profile/', views.register_profile, name='register_profile'),
 ]

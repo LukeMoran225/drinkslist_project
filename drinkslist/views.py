@@ -214,5 +214,14 @@ def check_login(request):
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied")
-    # return HttpResponse(json.dumps(result_list))
 
+@login_required
+def user_delete(request):
+    if request.method == 'POST':
+        id= int(request.POST.get('id'))
+        user = User.objects.get(id=id)
+        if user:
+            user.delete()
+            return HttpResponse("Deleted Successfully!")
+    else:
+            return HttpResponse("Access Fobbidden")

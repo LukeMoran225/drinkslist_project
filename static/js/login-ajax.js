@@ -46,7 +46,12 @@ $(document).ready(function(){
     $("#login_btn").click(function(){
         check();
     });
-
-
+    
+    $("#id_password,#id_username").keypress(function(){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            check();
+        }
+    });
 
 });
