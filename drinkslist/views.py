@@ -136,8 +136,7 @@ class ProfileView(View):
         
         user_profile = UserProfile.objects.get_or_create(user=user)[0]
         # current seleted detailed form
-        form = UserProfileForm({'is_professional': user_profile.is_professional,'picture': user_profile.picture})
-        print(form)
+        form = UserProfileForm({'is_professional': user_profile.is_professional,'is_private':user_profile.is_private,'picture': user_profile.picture})
         return (user, user_profile, form)
 
     @method_decorator(login_required)
@@ -167,7 +166,6 @@ class ProfileView(View):
         if form.is_valid():
             # refresh the form and commit 
             form.save(commit=True)
-            print(form,"saved")
             return redirect('drinkslist:profile', user.username)
         else:
             print(form.errors)
@@ -180,7 +178,7 @@ class ProfileView(View):
 class ListProfilesView(View):
     @method_decorator(login_required)
     def get(self,request):
-        profiles = UserProfile.objects.all()
+        profiles = UserProfile.objects.filter(is_private=False)
 
         return render(request,'drinkslist/list_profiles.html',{'user_profile_list':profiles})
 
