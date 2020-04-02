@@ -9,7 +9,7 @@ from drinkslist.google_search import run_google_search
 from django.views import View
 import json
 from django.contrib.auth.models import User
-from drinkslist.models import UserProfile
+from drinkslist.models import UserProfile,Recipe
 
 def index(request):
     context_dict = {}
@@ -225,3 +225,10 @@ def user_delete(request):
             return HttpResponse("Deleted Successfully!")
     else:
             return HttpResponse("Access Fobbidden")
+
+def recipe_list(request):
+    recipe = Recipe.objects.all()
+    context = {
+        'Recipe':recipe,
+    }
+    return render(request,'drinkslist/recipe_list.html')

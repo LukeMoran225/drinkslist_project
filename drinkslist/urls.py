@@ -17,4 +17,5 @@ urlpatterns = [
     path('user_delete/', views.user_delete, name='user_delete'),#helper func
     path('search/',views.search,name='search'),#helper func
     path('register_profile/', views.register_profile, name='register_profile'),
+    path('recipe/',views.recipe_list, name='recipe_list'),
 ]
