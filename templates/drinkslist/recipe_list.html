@@ -1,0 +1,34 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Recipe List
+{% endblock %}
+
+
+{% block heading_block %}
+    User Profiles
+{% endblock %}
+    
+
+{% block body_block %}
+    <div class="container">
+    
+    <h1 class="display-4">User Profiles</h1>
+    <hr class="my-4">
+        {% if Recipe %}
+		{% for r in Recipe %}
+            {{ r.drinkname }}
+			{{ r.added_by }}
+			{{ r.equipment }}
+			{{ r.ingredients }}
+			{{ r.how_to }}
+			{{ r.picture }}
+		{% endfor %}
+		{% endif %}
+            </div>
+    </div>
+
+
+{% endblock %}
+    
