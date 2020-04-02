@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
+from django.template.defaultfilters import slugify
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -16,6 +19,11 @@ class Drink(models.Model):
     name = models.CharField(max_length=100, unique=True)
     date_added = models.DateField(default=date.today)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Drink, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

@@ -234,18 +234,25 @@ def user_delete(request):
             return HttpResponse("Deleted Successfully!")
     else:
             return HttpResponse("Access Fobbidden")
-            
-def recipe_list(request):
-    recipe = Recipe.objects.all()
-    context = {
-        'Recipe':recipe,
-    }
-    return render(request,'drinkslist/recipe_list.html')
+
+
+def show_drink(request, drink_name_slug):
+    context_dict = {}
+
+    try:
+        drink = Drink.objects.get(slug=drink_name_slug)
+        recipes = Recipe.objects.filter(drink_name=drink)
+        context_dict['recipes'] = recipes
+        context_dict['drink'] = drink
+    except Drink.DoesNotExist:
+        context_dict['drink'] = None
+        context_dict['pages'] = None
+    return render(request,'drinkslist/drink.html', context=context_dict)
 
 
 def drinks(request):
     drink_list = Drink.objects.order_by('name')
     context_dict = {
-        'drinks':drink_list,
+        'drinks': drink_list,
     }
     return render(request,'drinkslist/drinks.html', context = context_dict)

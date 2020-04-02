@@ -1,0 +1,33 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Drink
+{% endblock %}
+
+
+{% block heading_block %}
+    Drink
+{% endblock %}
+    
+
+{% block body_block %}
+    {% if drink %}
+    <div class="container">
+    <h1 class="display-4">{{ drink.name }}</h1>
+    <hr class="my-4">
+        {% if recipes %}
+		{% for r in recipes %}
+        <li>{{ r.added_by }}</li>
+		{% endfor %}
+        {% else %}
+        <strong>No recipes currently for this drink.</strong>
+        {% endif %}
+        {% else %}
+        This drink doesn't have a page yet!
+		{% endif %}
+            </div>
+    </div>
+
+
+{% endblock %}

@@ -6,6 +6,7 @@ from drinkslist.models import Followed, Comment, Rating
 class DrinkAdmin(admin.ModelAdmin):
     # customising the Drink page
     list_display = ('name', 'date_added','added_by')
+    prepopulated_fields = {'slug':('name',)}
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('drink_name','added_by','equipment','ingredients','how_to','picture')

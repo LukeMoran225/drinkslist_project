@@ -18,7 +18,9 @@
     <hr class="my-4">
         {% if drinks %}
 		{% for d in drinks %}
-        <li>{{ d.name }}</li>
+        <li>
+            <a href="/drinkslist/drinks/{{ d.slug }}/">{{ d.name }}</a>
+        </li>
 		{% endfor %}
 		{% endif %}
             </div>

@@ -36,7 +36,7 @@
             {% block nav_button_block %}
             {% if user.is_authenticated %}
             <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
-			<a href="{% url 'drinkslist:recipe_list'%}"><button type="button" class="btn btn-secondary active">Recipe List</button></a>
+			<a href="{% url 'drinkslist:drinks'%}"><button type="button" class="btn btn-secondary active">Drinks</button></a>
 			<a href="{% url 'drinkslist:profile' user.username %}"><button type="button" class="btn btn-dark btn-secondary active">Profile</button></a>
             <a href="{% url 'drinkslist:list_profiles'%}"><button type="button" class="btn btn-dark btn-secondary active">List Profiles</button></a>
             <a href="{% url 'auth_logout' %}?next=/drinkslist/"><button type="button" class="btn btn-dark btn-secondary active" >Logout</button></a>
