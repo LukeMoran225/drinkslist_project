@@ -1,57 +1,3 @@
-<<<<<<< HEAD
-{% extends 'drinkslist/base.html' %}
-
-
-{% block title_block %}
-    Homepage
-{% endblock %}
-    
-{% block body_block %}
-    <!-- searching part -->
-    <div class="search-txt input-group mb-3">
-        <div class="input-group-prepend">
-            <select class="btn btn-outline-secondary dropdown-toggle" name="search-selection" id="search-selection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="dropdown-menu">
-                    <option class="dropdown-item" value="static">static</option>
-                    <option class="dropdown-item" value="google">google</option>
-                </div>
-            </select>
-            <div class="input-group-prepend">
-                {% csrf_token %}
-                <input class="search-input form-control" type="text" name="query" id="query" placeholder="Type to search">
-                <button class="search-button" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- POPUP AJAX WINDOW HERE -->
-    <div class="gsc-results-wrapper-overlay gsc-results-wrapper-visible" style="display: none;" id="dialog">
-        <!-- better to perform ajax to render the results -->
-        <h2>Light Searching Result</h2>
-    <div class="gsc-results-close-btn gsc-results-close-btn-visible" id="exit_btn"></div>
-    <div id="search-result" class="list-group">
-    <!-- BOOTSTRAP FORMAT -->
-    {% if result_list %}
-        <h2>Results</h2>
-        <div class="list-group" >
-            {% for result in result_list %}
-                <div class="list-group-item">
-                    <h3 class="list-group-item-heading">
-                        <a href="{{result.link}}">
-                            {{result.title|safe|escape}}
-                        </a>
-                    </h3>
-                    <p class="list-group-item">
-                        {{result.summary|safe|escape}}
-                    </p>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    </div>
-=======
 {% extends 'drinkslist/jumbotron.html' %}
 
 
@@ -94,7 +40,6 @@
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_win" id="active_btn" style="display: none;">
   </button>
->>>>>>> master
 
   <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="modal_win" tabindex="-1" role="dialog" aria-labelledby="modal_win_title" aria-hidden="true">
@@ -122,8 +67,5 @@
   </div>
   
 
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 {% endblock %}
