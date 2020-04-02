@@ -1,0 +1,26 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Create Recipe
+{% endblock %}
+
+
+{% block heading_block %}
+    Create Recipe
+{% endblock %}
+
+
+{% block body_block %}
+    <div class="container">
+
+    <h1 class="display-4">Create Recipe</h1>
+    <hr class="my-4">
+	<form method="post">
+        {{ form.as_p }}
+		<input typr="Submit" value="Create" class="btn btn-dark btn-secondary active">
+	</form>
+	</div>
+
+
+{% endblock %}

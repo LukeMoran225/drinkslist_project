@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
-from drinkslist.forms import UserForm, UserProfileForm
+from drinkslist.forms import RecipeCreateForm, UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
 from django.views import View
 import json
@@ -241,9 +241,23 @@ def recipe_list(request):
     return render(request,'drinkslist/recipe_list.html')
 
 
-def drinks(request):
-    drink_list = Drink.objects.order_by('name')
-    context_dict = {
-        'drinks':drink_list,
+def create_recipe(request):
+    if request.method == 'POST':
+        form =RecipeCreateForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.added_by = request.user
+            post.save()
+    else:
+        form = RecipeCreateForm()
+    context = {
+        'form': form,
     }
-    return render(request,'drinkslist/drinks.html', context = context_dict)
+    return render(request, 'drinkslist/create_recipe.html', context)
+
+def  recipe_detail(request, id):
+    recipe = Recipe.objects.get(id=id)
+    context = {
+        'Recipe':recipe,
+    }
+    return render(request, 'drinkslist/recipe_detail.html', context)
