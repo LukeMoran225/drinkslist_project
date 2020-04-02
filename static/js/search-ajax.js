@@ -1,5 +1,9 @@
 $(document).ready(function(){
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> master
     // several different events - sharing func
     function search(){
         // AJAX
@@ -8,6 +12,7 @@ $(document).ready(function(){
         console.log(selection);
         console.log(query);
     
+<<<<<<< HEAD
         // CSRF FAILS WHILE POST METHOD
     
         // var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
@@ -23,6 +28,8 @@ $(document).ready(function(){
         // xml.send('search-selection',selection);
         // xml.send('csrfmiddlewaretoken',csrfmiddlewaretoken);
         // xml.send();
+=======
+>>>>>>> master
     
         $.ajax({
             url: '/drinkslist/search/',
@@ -30,9 +37,14 @@ $(document).ready(function(){
             dataType: 'JSON',
             data: {'search-selection': selection, 'query': query, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()},
             success: function (data) {
+<<<<<<< HEAD
                 if($('#dialog').css("display")=="none"){
                     $('#dialog').show();
                 }
+=======
+                $('#active_btn').click();
+                $('#check').attr("class","jumbotron");
+>>>>>>> master
                 var raw;
                 if (data.length>0){
                     // css still needed to be done
@@ -41,17 +53,21 @@ $(document).ready(function(){
                         var title = data[i]['title'];
                         var link = data[i]['link'];
                         var summary = data[i]['summary'];
-                        raw = $('#search-result').html();
+                        raw = $('.modal-body').html();
                         raw = raw + '<li class="list-group-item"><a style="color:#007bff" class="list-group-item list-group-item-action" href='+ link+' >'+title+'</a>' +' <br />'+''+ summary + '</li><br/>'
-                        $('#search-result').html(raw);
+                        $('.modal-body').html(raw);
                         console.log(raw);
                     };
                     // sorting all the results
-                    $('#search-result').html(raw);
+                    $('.modal-title').html('Lightweight Searching Results');
+                    $('.modal-body').html(raw);
                     console.log(data);
                 }else{
                     // No results found
-                    $('#search-result').html('<li class="list-group-item">'+'No results found, searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google?</li>");
+                    $('.modal-title').html('Lightweight Searching Results');
+                    $('.modal-body').html('<li class="list-group-item">'+'No results found, searching for '+'<strong style="color:#007bff">'+query+'</strong>'+" in Google?</li>");
+                    $('.gsc-input').attr("value",query);
+                    $('.gcse-search').show();
                 }
             },
             failure: function(data){
@@ -73,15 +89,53 @@ $(document).ready(function(){
             // check whether the text field is empty
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
+<<<<<<< HEAD
                 if($(this).val().length<1){
                     alert("The text field is empty!");
                     return false;
+=======
+                $("#modal_title").text("Processing Ajax");
+                $(".modal-body").text("");
+                if($(this).val().length<1){
+                    // alert("The text field is empty!");
+                    // return false;
+                    $('#check').attr("class","jumbotron");
+                    $('#active_btn').click();
+                    $("#modal_title").text("Error");
+                    $(".modal-body").text("The text field is empty!");
+>>>>>>> master
                 }else{
                     search();
                 }
             }
         }
+<<<<<<< HEAD
+=======
     });
+    
+    $('.search-button').on({
+        'mouseenter':function(){
+            $(this).css("color","#007bff");
+        },
+        'mouseleave':function(){
+            $(this).css("color","black");
+        },
+        click:function(event){
+            $("#modal_title").text("Processing Ajax");
+            $(".modal-body").text("");
+            // check whether the text field is empty
+            if($("#query").val().length<1){
+                $('#check').attr("class","jumbotron");
+                $('#active_btn').click();
+                $("#modal_title").text("Error");
+                $(".modal-body").text("The text field is empty!");
+            }else{
+                search();
+            }
+        },
+>>>>>>> master
+    });
+    
 
     $('.search-button').on({
         'mouseenter':function(){
@@ -111,6 +165,7 @@ $(document).ready(function(){
 
 });
 
+<<<<<<< HEAD
 // click other div will close the popup window, not done
 
 // $(document).bind("click",function(){
@@ -121,3 +176,5 @@ $(document).ready(function(){
 //     }
 // });
 
+=======
+>>>>>>> master

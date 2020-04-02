@@ -1,6 +1,12 @@
 $(document).ready(function(){
-// dynamicly adding css to the django form ,avoiding changing the template tags
+
+    // dynamicly adding css to the django form ,avoiding changing the template tags
     var input_sets =  $('#user_form').find("input");
+    var error_helper = $('#user_form').find("ul");
+    var error_list = $('.errorlist');
+    var parent_form = $('#user_form');
+    error_list.css("color","#007bff");
+
     for (var i=0;i<input_sets.length;i++){
         var each = input_sets[i];
         var type = $(each).attr('type');
@@ -16,7 +22,20 @@ $(document).ready(function(){
             each.className = "form-control";
         }
     };
+    
+    
+    $('#check_btn').on({
+        "click":function(){
+            if($(error_helper).hide()){
+                $(error_helper).show();
+            }
+        }
+    })
 
-    $('#reminder').attr("class","mr-5");
+    $('.custom-file-input').on('change',function(){ 
+        let fileName = $(this).val().split('\\').pop(); 
+        $('.custom-file-label').addClass("selected").html(fileName); 
+    });
+   
 
 });

@@ -1,30 +1,26 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response,redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse
-from django.shortcuts import redirect
 from drinkslist.forms import UserForm, UserProfileForm
 from drinkslist.google_search import run_google_search
+from django.views import View
 import json
-
+from django.contrib.auth.models import User
+from drinkslist.models import UserProfile
 
 def index(request):
-    
     context_dict = {}
-
     return render(request, 'drinkslist/index.html',context_dict)
 
-
-def about(request):
-    return HttpResponse("Drinks list about page.")
-
+class AboutView(View):
+    def get(self,request):
+        return render(request,'drinkslist/about.html')
 
 def contactus(request):
-    return HttpResponse("Drinks list contact us page")
-
-
-
-
+    return render(request,'drinkslist/contactus.html')
 
 def register(request):
     registered = False
@@ -55,7 +51,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'drinkslist/register.html',
+    return render(request, 'registration/registration_form.html',
                   context={'user_form': user_form,
                            'profile_form': profile_form,
                            'registered': registered})
@@ -79,6 +75,112 @@ def user_login(request):
         return render(request,'drinkslist/login.html')
 
 
+def user_logout(request):
+    logout(request)
+    return redirect('/')
+
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+    if form.is_valid():
+        user_profile = form.save(commit=False)
+        user_profile.user = request.user
+        user_profile.save()
+        return redirect(reverse('drinkslist:index'))
+    else:
+        print(form.errors)
+
+    context_dict = {'form': form}
+    return render(request, 'drinkslist/profile_registration.html', context_dict)
+
+
+class RegisterProfile(View):
+    @method_decorator(login_required)
+    def post(self,request):
+        context_dict = {}
+        form = UserProfileForm()
+        form = UserProfileForm(request.POST, request.FILES)
+        # check whether all the form fields are filled correctly
+        if form.is_valid():
+            # give the time to manipulate the new instance before commiting
+            user_profile = form.save(commit=False)
+            # refresh current user
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect(reverse('drinkslist:index'))
+        else:
+            print(form.errors)
+
+        context_dict = {'form':form}
+        return render(request, 'drinkslist/profile_registration.html', context_dict)
+    
+    @method_decorator(login_required)
+    def get(self,request):
+        form = UserProfileForm()
+        context_dict = {'form':form}
+        return render(request, 'drinkslist/profile_registration.html', context_dict)
+
+class ProfileView(View):
+    # avoid repeating [DRY]
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+        
+        user_profile = UserProfile.objects.get_or_create(user=user)[0]
+        # current seleted detailed form
+        form = UserProfileForm({'is_professional': user_profile.is_professional,'picture': user_profile.picture})
+        return (user, user_profile, form)
+
+    @method_decorator(login_required)
+    def get(self, request, username):
+        # username from url, paramised view
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('drinkslist:index'))
+        context_dict = {'user_profile': user_profile,
+        'selected_user': user,
+        'form': form}
+        return render(request, 'drinkslist/profile.html', context_dict)
+    
+    # update profile
+    @method_decorator(login_required)
+    def post(self, request, username):
+         # username from url, paramised view
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('drinkslist:index'))
+        
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            # refresh the form and commit 
+            form.save(commit=True)
+            return redirect('drinkslist:profile', user.username)
+        else:
+            print(form.errors)
+            # return old details
+            context_dict = {'user_profile': user_profile,
+            'selected_user': user,
+            'form': form}
+            return render(request, 'drinkslist/profile.html', context_dict)
+
+class ListProfilesView(View):
+    @method_decorator(login_required)
+    def get(self,request):
+        profiles = UserProfile.objects.all()
+
+        return render(request,'drinkslist/list_profiles.html',{'user_profile_list':profiles})
+
+"""
+AJAX HELPER FUNCTION
+"""
+
 # AJAX Applied - search helper function : return the searching results of google & Site
 def search(request):
     result_list = []
@@ -96,3 +198,30 @@ def search(request):
                 result_list = run_google_search(query)
 
     return HttpResponse(json.dumps(result_list))
+
+# Ajax Applied - test user input in login page
+def check_login(request):
+    if request.method =='POST':
+        username= request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username,password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return redirect(reverse('drinkslist:index'))
+            else:
+                return HttpResponse("Your Drinkslist account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied")
+
+@login_required
+def user_delete(request):
+    if request.method == 'POST':
+        id= int(request.POST.get('id'))
+        user = User.objects.get(id=id)
+        if user:
+            user.delete()
+            return HttpResponse("Deleted Successfully!")
+    else:
+            return HttpResponse("Access Fobbidden")

@@ -1,0 +1,24 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Registration Closed
+{% endblock %}
+
+{% block heading_block %}
+Registration Closed
+{% endblock %}
+		
+
+{% block nav_button_block %}
+	<a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron">
+    <h1 class="display-4">Logout</h1>
+    <p class="lead">Drinkslist Logout page</p>
+    <hr class="my-4">
+    <p>Unfortunately, registration is currently closed. Please try again later!</p>
+  </div>
+{% endblock %}

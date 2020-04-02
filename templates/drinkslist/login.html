@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'drinkslist/base.html' %}
+=======
+{% extends 'drinkslist/jumbotron.html' %}
+>>>>>>> master
 {% load staticfiles %}
 
 {% block title_block %}
@@ -15,6 +19,7 @@
 {% endblock %}
 
 
+<<<<<<< HEAD
 {% block body_block %}
 
     <form class="form-control" id="login_form" method="post" action="{% url 'drinkslist:login' %}">
@@ -35,3 +40,54 @@
     </form>
     
 {% endblock %}
+=======
+{% block p_block %}
+    <h1 id="reminder" class="display-4 mb-5">Login</h1>
+    <!-- <form class="form-control" id="login_form" method="post" action="."> -->
+    {% csrf_token %}
+    <div class="form-control">
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            <input type="text" class="form-control" id="id_username" name="username" value="" size="50"/>
+        </div>
+        <div class="form-group">
+            <label for="id_password">Password:</label>
+            <input type="password" class="form-control" id="id_password" name="password"  size="50"/>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary" id="login_btn" value="{% url 'drinkslist:check_login' %}">Login</button>
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+    
+    <!-- POPUP AJAX WINDOW HERE -->
+    
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_win" id="active_btn" style="display:none">
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="modal_win" tabindex="-1" role="dialog" aria-labelledby="modal_win_title" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+{% endblock %}
+
+>>>>>>> master

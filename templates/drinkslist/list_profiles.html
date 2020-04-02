@@ -1,0 +1,48 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    User Profiles
+{% endblock %}
+
+
+{% block heading_block %}
+    User Profiles
+{% endblock %}
+    
+
+{% block body_block %}
+    <div class="container">
+    
+    <h1 class="display-4">User Profiles</h1>
+    <hr class="my-4">
+        {% if user_profile_list %}
+        {% for list_user in user_profile_list %}
+            <div class="card testimonial-card">
+                {% if list_user.picture %}
+                <div class="avatar mx-auto white">
+                <img class="rounded-circle mt-5" width="100px" src="{{ MEDIA_URL }}{{ list_user.picture }}" alt="{{ selected_user.username }}'s profile image" />
+                </div>
+                {% else %}
+                <div class="avatar mx-auto white">
+                <img width="100px" class="rounded-circle mt-5"
+                src="{% static 'images/default.png' %}"/>
+                </div>
+                {% endif %}
+                <br />
+                <div class="card-body">
+                    <hr class="my-4">
+                    <a href="{% url 'drinkslist:profile' list_user.user.username %}">
+                        <h5 class="card-title">{{ list_user.user.username }}</h5>
+                    </a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>There are no users present on Drinkslist.</p>
+                {% endif %}
+            </div>
+    </div>
+
+
+{% endblock %}
+    

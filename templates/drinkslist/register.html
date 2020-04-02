@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'drinkslist/base.html' %}
+=======
+{% extends 'drinkslist/jumbotron.html' %}
+>>>>>>> master
 {% load staticfiles %}
 
 {% block heading_block %}
@@ -9,6 +13,7 @@
     Register    
 {% endblock %}
     
+<<<<<<< HEAD
 
 {% block nav_button_block %}
     <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
@@ -21,23 +26,44 @@
     {% else %}
         <Strong id="reminder">Register Here</Strong>
         
+=======
+{% block nav_button_block %}
+    <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
+{% endblock %}
+
+{% block p_block %}
+
+    {% if registered %}
+        <h1 id="reminder" class="display-4 mb-5">Registered</h1>
+    {% else %}
+        <h1 id="reminder" class="display-4 mb-5">Register Here</h1>
+>>>>>>> master
         <form class="form-control" id="user_form" method="post" action="{% url 'drinkslist:register' %}"
         enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 {{ user_form.as_p}}
                 {{ profile_form.as_p}}
+<<<<<<< HEAD
                 
+=======
+>>>>>>> master
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
                   <button type="submit" class="btn btn-primary">Register</button>
                 </div>
             </div>
+<<<<<<< HEAD
 
             
         </form>
         
     {% endif %}
 
+=======
+        </form>
+    {% endif %}
+    
+>>>>>>> master
 {% endblock %}
