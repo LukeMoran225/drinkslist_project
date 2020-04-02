@@ -9,7 +9,9 @@ from drinkslist.google_search import run_google_search
 from django.views import View
 import json
 from django.contrib.auth.models import User
-from drinkslist.models import Recipe, UserProfile
+from drinkslist.models import Recipe, UserProfile, Drink
+
+
 
 def index(request):
     context_dict = {}
@@ -239,3 +241,11 @@ def recipe_list(request):
         'Recipe':recipe,
     }
     return render(request,'drinkslist/recipe_list.html')
+
+
+def drinks(request):
+    drink_list = Drink.objects.order_by('name')
+    context_dict = {
+        'drinks':drink_list,
+    }
+    return render(request,'drinkslist/drinks.html', context = context_dict)

@@ -1,0 +1,28 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Drinks
+{% endblock %}
+
+
+{% block heading_block %}
+    Drinks
+{% endblock %}
+    
+
+{% block body_block %}
+    <div class="container">
+    
+    <h1 class="display-4">Drinks</h1>
+    <hr class="my-4">
+        {% if drinks %}
+		{% for d in drinks %}
+        <li>{{ d.name }}</li>
+		{% endfor %}
+		{% endif %}
+            </div>
+    </div>
+
+
+{% endblock %}
