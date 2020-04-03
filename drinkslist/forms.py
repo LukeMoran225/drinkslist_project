@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.http import request
-from drinkslist.models import Recipe, UserProfile
+from drinkslist.models import Recipe, UserProfile, Drink
 
 
 class UserForm(forms.ModelForm):
@@ -15,11 +15,12 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('is_professional', 'is_private','picture')
+        fields = ('is_professional', 'is_private', 'picture')
 
 
 class RecipeCreateForm(forms.ModelForm):
     added_by = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     class Meta:
         model = Recipe
         fields = (
@@ -29,4 +30,12 @@ class RecipeCreateForm(forms.ModelForm):
             'ingredients',
             'how_to',
             'picture',
+        )
+
+
+class DrinkForm(forms.ModelForm):
+    class Meta:
+        model = Drink
+        fields = (
+            'name',
         )

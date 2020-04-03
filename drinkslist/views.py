@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
-from drinkslist.forms import RecipeCreateForm, UserForm, UserProfileForm
+from drinkslist.forms import RecipeCreateForm, UserForm, UserProfileForm, DrinkForm
 from drinkslist.google_search import run_google_search
 from django.views import View
 import json
@@ -276,3 +276,16 @@ def  recipe_detail(request, id):
         'Recipe':recipe,
     }
     return render(request, 'drinkslist/recipe_detail.html', context)
+
+
+def add_drink(request):
+    form = DrinkForm()
+    if request.method == 'POST':
+        form = DrinkForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/drinkslist/')
+        else:
+            print(form.errors)
+    return render(request, 'drinkslist/add_drink.html', {'form': form})

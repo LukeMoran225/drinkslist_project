@@ -17,9 +17,9 @@ class UserProfile(models.Model):
 
 
 class Drink(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True, primary_key=True)
     date_added = models.DateField(default=date.today)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    added_by = models.CharField(max_length=100, null=True)
     slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
@@ -33,9 +33,9 @@ class Drink(models.Model):
 class Recipe(models.Model):
     # ID static variable that increments by 1
     # ID = models.IntegerField(primary_key=True)
-    drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE, related_name='recipe_drink')
+    # drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE, related_name='recipe_drink')
+    drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE)
     added_by = models.CharField(max_length=100, null=True)
-    # added_by = models.CharField(max_length=100, blank=True, null=True)
     equipment = models.CharField(max_length=250)
     ingredients = models.CharField(max_length=250)
     how_to = models.CharField(max_length=250)

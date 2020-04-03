@@ -22,8 +22,11 @@
             <a href="/drinkslist/drinks/{{ d.slug }}/">{{ d.name }}</a>
         </li>
 		{% endfor %}
-		{% endif %}
-        <input typr="Submit" value="Add a drink" class="btn btn-dark btn-secondary active">
+        {% else %}
+        <strong>Doesn't look like there are any drinks!</strong>
+        {% endif %}
+        <br>
+        <a href="{% url 'drinkslist:add_drink' %}"><button type="button" class="btn btn-secondary active">Add a drink</button></a>
             </div>
     </div>
 

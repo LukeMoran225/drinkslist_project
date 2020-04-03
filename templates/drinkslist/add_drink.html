@@ -1,0 +1,27 @@
+{% extends 'drinkslist/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add a Drink
+{% endblock %}
+
+
+{% block heading_block %}
+    Add a Drink
+{% endblock %}
+
+
+{% block body_block %}
+    <div class="container">
+
+    <h1 class="display-4">Add a Drink</h1>
+    <hr class="my-4">
+	<form id="DrinkForm" method="post" action="/drinkslist/add_drink/">
+        {% csrf_token %}
+        {{ form.as_p }}
+		<input type="Submit" value="Create" class="btn btn-dark btn-secondary active">
+	</form>
+	</div>
+
+
+{% endblock %}
