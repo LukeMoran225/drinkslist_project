@@ -35,6 +35,7 @@
         {% if comments %}
          {% for c in comments %}
          <li>{{ c.comment }}</li>
+         {% endfor %}
          {% else %}
             <strong>What an empty comment section!</strong>
 		{% endif %}
