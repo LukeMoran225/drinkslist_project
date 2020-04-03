@@ -302,17 +302,22 @@ def create_recipe(request, drink_name_slug):
         print(form.errors)
     return render(request, 'drinkslist/create_recipe.html', {'form': form, 'drink': drink})
 
-
+@login_required
 def recipe_detail(request, recipe_id, drink_name_slug):
     drink = Drink.objects.get(slug=drink_name_slug)
     recipe = Recipe.objects.get(id=recipe_id)
+    user = User.objects.get(username=recipe.added_by.username)
+    user_pro = UserProfile.objects.get(user=user)
     context_dict = {
         'recipe': recipe,
         'drink': drink,
+        'user':user,
+        'user_pro':user_pro
     }
     try:
         comments = Comment.objects.get(for_recipe=recipe)
         context_dict['comment'] = comments
+        context_dict['user_pro'] = user_pro
     except Comment.DoesNotExist:
         context_dict['comment'] = None
     return render(request, 'drinkslist/recipe_detail.html', context=context_dict)
