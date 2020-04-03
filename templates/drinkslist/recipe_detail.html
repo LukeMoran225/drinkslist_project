@@ -36,7 +36,6 @@
         {{ recipe.how_to }}
         <hr class="my-4">
         <h1 class="display-20">Picture</h1>
-        
         {% if recipe.picture %}
         {{ recipe.picture }}
         {% else %}
@@ -46,17 +45,30 @@
         {% endif %}
     </p>
     <hr class="my-4">
-    <div class="container">
+    <div class="">
     
     <h1 class="display-20">Comments</h1>
-    <hr class="my-4">
-       {% if comments %}
-        {% for c in comments %}
-        <li>{{ c.comment }}</li>
-        {% endfor %}
-        {% else %}
-           <strong>What an empty comment section!</strong>
-       {% endif %}
+    <div class="">
+        <div class="form-group form-control" id="user_form">
+            <form method="post" action="." enctype="multipart/form-data" id="user_form">
+            {% csrf_token %}
+            <label for="exampleFormControlTextarea1">Type your comment here:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-dark mt-3">Comment</button>
+                </div>
+              </div>
+          </form>
+        </div>
+        {% if comments %}
+         {% for c in comments %}
+         <li>{{ c.comment }}</li>
+         {% endfor %}
+         {% else %}
+            <strong>What an empty comment section!</strong>
+        {% endif %}
+    </div>
     </div>
   </div>
     </div>
