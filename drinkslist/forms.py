@@ -19,13 +19,13 @@ class UserProfileForm(forms.ModelForm):
 
 
 class RecipeCreateForm(forms.ModelForm):
-    added_by = forms.CharField(widget=forms.HiddenInput(), required=False)
+    # added_by = forms.CharField(widget=forms.HiddenInput(),required=False)
 
     class Meta:
         model = Recipe
         fields = (
             'drink_name',
-            'added_by',
+            # 'added_by',
             'equipment',
             'ingredients',
             'how_to',

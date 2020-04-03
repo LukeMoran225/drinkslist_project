@@ -13,13 +13,12 @@
 
 {% block body_block %}
     <div class="container">
-
     <h1 class="display-4">Create Recipe</h1>
     <hr class="my-4">
-	<form id="RecipeCreateForm" method="post" action="/drinkslist/create_recipe/">
+	<form id="user_form" method="post" action="/drinkslist/create_recipe/" data={{user}}>
         {% csrf_token %}
         {{ form.as_p }}
-		<input type="Submit" value="Create" class="btn btn-dark btn-secondary active">
+		<button type="submit" value="create" class="btn btn-dark btn-secondary active mt-3 float-right">Create</button>
 	</form>
 	</div>
 

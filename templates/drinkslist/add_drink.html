@@ -16,12 +16,11 @@
 
     <h1 class="display-4">Add a Drink</h1>
     <hr class="my-4">
-	<form id="DrinkForm" method="post" action="/drinkslist/add_drink/">
+	<form id="user_form" method="post" action="/drinkslist/add_drink/">
         {% csrf_token %}
         {{ form.as_p }}
-		<input type="Submit" value="Create" class="btn btn-dark btn-secondary active">
+		<button type="submit" value="create" class="btn btn-dark btn-secondary active mt-3 float-left">Create</button>
 	</form>
 	</div>
-
 
 {% endblock %}

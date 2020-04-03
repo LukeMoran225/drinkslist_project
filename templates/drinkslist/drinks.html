@@ -19,7 +19,7 @@
         {% if drinks %}
 		{% for d in drinks %}
         <li>
-            <a href="/drinkslist/drinks/{{ d.slug }}/">{{ d.name }}</a>
+            <a href="{% url 'drinkslist:show_drink' d.slug %}">{{ d.name }}</a>
         </li>
 		{% endfor %}
         {% else %}

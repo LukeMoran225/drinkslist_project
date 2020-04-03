@@ -236,7 +236,6 @@ def user_delete(request):
 
 def show_drink(request, drink_name_slug):
     context_dict = {}
-
     try:
         drink = Drink.objects.get(slug=drink_name_slug)
         recipes = Recipe.objects.filter(drink_name=drink)
@@ -260,31 +259,60 @@ def create_recipe(request):
 
     form = RecipeCreateForm()
     if request.method == 'POST':
+         #  current User - must acquire from User model
+        # current drink id - acquire the Drink instance
+        user = User.objects.get(username=request.user)
+        drink_id = request.POST['drink_name']
+        drink = Drink.objects.get(pk=drink_id)
+        # To change the POST data, deep copy
+        post_copy = request.POST.copy()
+        post_copy['added_by'] = user
+        # post_copy['drink_name'] = drink_id#form need id
+        # print("COPY",post_copy)
+        # new form data - check the validity
         form = RecipeCreateForm(request.POST)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.added_by = request.user
+            print(form)
+            instance = Recipe()
+            instance.equipment = request.POST['equipment']
+            instance.how_to = request.POST['how_to']
+            instance.ingredients = request.POST['ingredients']
+            instance.picture = request.POST['picture']
+            instance.drink_name = drink
+            instance.added_by = User.objects.get(username=request.user.username)
+            # instance = form.save(commit=False)
+            # instance.drink_name = drink
+            # instance.added_by = user
             instance.save()
+            # instance.drink_name = Drink.objects.get(pk=drink_id)
+            # instance.save()
             return redirect('/drinkslist/')
     else:
         print(form.errors)
     return render(request, 'drinkslist/create_recipe.html', {'form':form})
 
-def  recipe_detail(request, id):
+def recipe_detail(request, id):
     recipe = Recipe.objects.get(id=id)
     context = {
         'Recipe':recipe,
     }
     return render(request, 'drinkslist/recipe_detail.html', context)
 
-
 def add_drink(request):
     form = DrinkForm()
+    instance = Drink()
     if request.method == 'POST':
-        form = DrinkForm(request.POST)
-
+        #  current User - must acquire from User model
+        user = User.objects.get(username=request.user)
+        # To change the POST data, deep copy
+        post_copy = request.POST.copy()
+        post_copy['added_by'] = user
+        # new form data - check the validity
+        form = DrinkForm(post_copy)
         if form.is_valid():
-            form.save(commit=True)
+            instance = form.save(commit=False)#save later
+            instance.added_by = user
+            instance.save()
             return redirect('/drinkslist/')
         else:
             print(form.errors)
