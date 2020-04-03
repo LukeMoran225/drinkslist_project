@@ -9,7 +9,7 @@ from drinkslist.google_search import run_google_search
 from django.views import View
 import json
 from django.contrib.auth.models import User
-from drinkslist.models import Recipe, UserProfile, Drink
+from drinkslist.models import Recipe, UserProfile, Drink, Comment
 
 
 def index(request):
@@ -303,12 +303,19 @@ def create_recipe(request, drink_name_slug):
     return render(request, 'drinkslist/create_recipe.html', {'form': form, 'drink': drink})
 
 
-def recipe_detail(request, id):
-    recipe = Recipe.objects.get(id=id)
-    context = {
-        'Recipe': recipe,
+def recipe_detail(request, recipe_id, drink_name_slug):
+    drink = Drink.objects.get(slug=drink_name_slug)
+    recipe = Recipe.objects.get(id=recipe_id)
+    context_dict = {
+        'recipe': recipe,
+        'drink': drink,
     }
-    return render(request, 'drinkslist/recipe_detail.html', context)
+    try:
+        comments = Comment.objects.get(for_recipe=recipe)
+        context_dict['comment'] = comments
+    except Comment.DoesNotExist:
+        context_dict['comment'] = None
+    return render(request, 'drinkslist/recipe_detail.html', context=context_dict)
 
 
 def add_drink(request):

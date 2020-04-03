@@ -2,29 +2,41 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Recipe List
+    Recipe Detail
 {% endblock %}
 
 
 {% block heading_block %}
-    Recipe List
+    Recipe Detail
 {% endblock %}
 
 
 {% block body_block %}
     <div class="container">
 
-    <h1 class="display-4">Recipe List</h1>
+    <h1 class="display-4">{{ recipe.drink_name}}</h1>
+        <h2 class="display-8">By {{ recipe.added_by }}</h2>
     <hr class="my-4">
-        {% if Recipe %}
-		{% for r in Recipe %}
-            {{ r.drinkname }}
-			{{ r.added_by }}
-			{{ r.equipment }}
-			{{ r.ingredients }}
-			{{ r.how_to }}
-			{{ r.picture }}
-		{% endfor %}
+        {% if recipe %}
+            {{ user.name }}
+            {{ recipe.drink_name }}
+			{{ recipe.added_by }}
+			{{ recipe.equipment }}
+			{{ recipe.ingredients }}
+			{{ recipe.how_to }}
+			{{ recipe.picture }}
+		{% endif %}
+    </div>
+
+     <div class="container">
+
+    <h1 class="display-20">Comments</h1>
+    <hr class="my-4">
+        {% if comments %}
+         {% for c in comments %}
+         <li>{{ c.comment }}</li>
+         {% else %}
+            <strong>What an empty comment section!</strong>
 		{% endif %}
     </div>
 

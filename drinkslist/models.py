@@ -39,6 +39,11 @@ class Recipe(models.Model):
     ingredients = models.CharField(max_length=250)
     how_to = models.CharField(max_length=250)
     picture = models.ImageField(upload_to='recipe_images', blank=True)
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super(Recipe, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.drink_name) + '' + str(self.id)

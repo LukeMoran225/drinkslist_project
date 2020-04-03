@@ -18,7 +18,7 @@
     <hr class="my-4">
         {% if recipes %}
 		{% for r in recipes %}
-        <li>{{ r.added_by }}</li>
+        <li><a href="{% url 'drinkslist:recipe_detail' drink.slug r.id %}">{{ r.added_by }}</a></li>
 		{% endfor %}
         <br>
         <a href="{% url 'drinkslist:create_recipe' drink.slug %}"><button type="button" class="btn btn-secondary active">Add a recipe</button></a>
