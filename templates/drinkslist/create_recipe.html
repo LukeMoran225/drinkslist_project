@@ -19,7 +19,9 @@
 	<form id="user_form" method="post" action="{% url 'drinkslist:create_recipe' drink.slug %}" data={{user}}>
         {% csrf_token %}
         {{ form.as_p }}
-		<button type="submit" value="create" class="btn btn-dark btn-secondary active mt-3 float-right">Create</button>
+        {% if user.is_authenticated %}
+        <button type="submit" value="create" class="btn btn-dark btn-secondary active mt-3 float-right">Create</button>
+        {% endif %}
 	</form>
 	</div>
 

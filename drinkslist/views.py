@@ -13,16 +13,21 @@ from drinkslist.models import Recipe, UserProfile, Drink, Comment
 
 
 def index(request):
-    context_dict = {}
+    context_dict ={}
+    context_dict['current_user'] = request.user
     return render(request, 'drinkslist/index.html', context_dict)
 
 
 class AboutView(View):
     def get(self, request):
-        return render(request, 'drinkslist/about.html')
+        context_dict ={}
+        context_dict['current_user'] = request.user
+        return render(request, 'drinkslist/about.html',context_dict)
 
 
 def contactus(request):
+    context_dict ={}
+    context_dict['current_user'] = request.user
     return render(request, 'drinkslist/contactus.html')
 
 
@@ -118,13 +123,13 @@ class RegisterProfile(View):
         else:
             print(form.errors)
 
-        context_dict = {'form': form}
+        context_dict = {'form': form,'current_user':request.user}
         return render(request, 'drinkslist/profile_registration.html', context_dict)
 
     @method_decorator(login_required)
     def get(self, request):
         form = UserProfileForm()
-        context_dict = {'form': form}
+        context_dict = {'form': form,'current_user':request.user}
         return render(request, 'drinkslist/profile_registration.html', context_dict)
 
 
@@ -152,7 +157,7 @@ class ProfileView(View):
             return redirect(reverse('drinkslist:index'))
         context_dict = {'user_profile': user_profile,
                         'selected_user': user,
-                        'form': form}
+                        'form': form,'current_user':request.user}
         return render(request, 'drinkslist/profile.html', context_dict)
 
     # update profile
@@ -176,7 +181,7 @@ class ProfileView(View):
             # return old details
             context_dict = {'user_profile': user_profile,
                             'selected_user': user,
-                            'form': form}
+                            'form': form,'current_user':request.user}
             return render(request, 'drinkslist/profile.html', context_dict)
 
 
@@ -185,7 +190,7 @@ class ListProfilesView(View):
     def get(self, request):
         profiles = UserProfile.objects.filter(is_private=False)
 
-        return render(request, 'drinkslist/list_profiles.html', {'user_profile_list': profiles})
+        return render(request, 'drinkslist/list_profiles.html', {'user_profile_list': profiles,'current_user':request.user})
 
 
 """
@@ -205,7 +210,14 @@ def search(request):
         if query:
             if selection == "static":
                 # default site static searching
-                pass
+                # be able to search specific User & Drink accroding to the query info
+                try:
+                    user_query = []
+                    drink_query = []
+                    user = User.objects.filter(username__istartswith=query)
+                    # drink = Drink.objects.filter(name__)
+                except:
+                    pass
             else:
                 result_list = run_google_search(query)
 
@@ -251,6 +263,7 @@ def show_drink(request, drink_name_slug):
     except Drink.DoesNotExist:
         context_dict['drink'] = None
         context_dict['pages'] = None
+        context_dict['current_user'] = request.user
     return render(request, 'drinkslist/drink.html', context=context_dict)
 
 
@@ -258,11 +271,10 @@ def drinks(request):
     drink_list = Drink.objects.order_by('name')
     context_dict = {
         'drinks': drink_list,
+        'current_user':request.user
     }
     return render(request, 'drinkslist/drinks.html', context=context_dict)
 
-
-@login_required
 def create_recipe(request, drink_name_slug):
     form = RecipeCreateForm()
     drink = Drink.objects.get(slug=drink_name_slug)
@@ -300,28 +312,55 @@ def create_recipe(request, drink_name_slug):
             return redirect('/drinkslist/')
     else:
         print(form.errors)
-    return render(request, 'drinkslist/create_recipe.html', {'form': form, 'drink': drink})
+    return render(request, 'drinkslist/create_recipe.html', {'form': form, 'drink': drink,'user':request.user,'current_user':request.user})
 
-@login_required
 def recipe_detail(request, recipe_id, drink_name_slug):
-    drink = Drink.objects.get(slug=drink_name_slug)
-    recipe = Recipe.objects.get(id=recipe_id)
-    user = User.objects.get(username=recipe.added_by.username)
-    user_pro = UserProfile.objects.get(user=user)
-    context_dict = {
-        'recipe': recipe,
-        'drink': drink,
-        'user':user,
-        'user_pro':user_pro
-    }
-    try:
-        comments = Comment.objects.get(for_recipe=recipe)
-        context_dict['comment'] = comments
-        context_dict['user_pro'] = user_pro
-    except Comment.DoesNotExist:
-        context_dict['comment'] = None
+    current_user = request.user
+    context_dict = {}
+    if request.method =="GET":
+        drink = Drink.objects.get(slug=drink_name_slug)
+        recipe = Recipe.objects.get(id=recipe_id)
+        user = User.objects.get(username=recipe.added_by.username)
+        user_pro = UserProfile.objects.get(user=user)
+        context_dict = {
+            'recipe': recipe,
+            'drink': drink,
+            'user':user,
+            'user_pro':user_pro,
+            'current_user':current_user
+        }
+        try:
+            comments = Comment.objects.filter(for_recipe=recipe)
+            context_dict['comments'] = comments
+            context_dict['user_pro'] = user_pro
+        except Comment.DoesNotExist:
+            context_dict['comments'] = None
+    elif request.method =="POST":
+        drink = Drink.objects.get(slug=drink_name_slug)
+        recipe = Recipe.objects.get(id=recipe_id)
+        user1 = User.objects.get(username=user.username)
+        user_pro = UserProfile.objects.get(user=user)
+        context_dict = {
+            'recipe': recipe,
+            'drink': drink,
+            'user':user1,
+            'user_pro':user_pro,
+            
+        }
+        c = Comment()
+        recipe = Recipe.objects.get(id=recipe_id)
+        c.made_by = user1
+        c.for_recipe = recipe
+        c.comment = request.POST['content']
+        c.save()
+        print(c)
+        try:
+            comments = Comment.objects.filter(for_recipe=recipe)
+            print(comments)
+            context_dict['comments'] = comments
+        except Comment.DoesNotExist:
+            context_dict['comments'] = None
     return render(request, 'drinkslist/recipe_detail.html', context=context_dict)
-
 
 def add_drink(request):
     form = DrinkForm()
@@ -341,4 +380,8 @@ def add_drink(request):
             return redirect('/drinkslist/')
         else:
             print(form.errors)
-    return render(request, 'drinkslist/add_drink.html', {'form': form})
+    return render(request, 'drinkslist/add_drink.html', {'form': form,'current_user':request.user})
+
+# ajax helper - save the comment model
+def add_comment(request):
+ pass

@@ -23,4 +23,5 @@ urlpatterns = [
     path('drinks/<slug:drink_name_slug>/create_recipe/', views.create_recipe, name='create_recipe'),
     path('add_drink/', views.add_drink, name='add_drink'),
     path('drinks/<slug:drink_name_slug>/<int:recipe_id>/', views.recipe_detail, name='recipe_detail'),
+    path('drinks/<slug:drink_name_slug>/<int:recipe_id>/', views.add_comment, name='comment'),
 ]

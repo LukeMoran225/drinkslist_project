@@ -46,24 +46,33 @@
     </p>
     <hr class="my-4">
     <div class="">
-    
-    <h1 class="display-20">Comments</h1>
+        
+        <h1 class="display-20">Comments</h1>
     <div class="">
+        {% if user.is_authenticate %}
         <div class="form-group form-control" id="user_form">
-            <form method="post" action="." enctype="multipart/form-data" id="user_form">
-            {% csrf_token %}
-            <label for="exampleFormControlTextarea1">Type your comment here:</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                  <button type="submit" class="btn btn-dark mt-3">Comment</button>
+            <form method="post" action="." enctype="multipart/form-data" id="user_form" recipe="{{recipe.id}}">
+                {% csrf_token %}
+                    
+                <label for="exampleFormControlTextarea1" >Type your comment here:</label>
+                <textarea class="form-control" id="cm" rows="3" name="content" value=""></textarea>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-dark mt-3" id="cm-btn">Comment</button>
+                    </div>
                 </div>
-              </div>
-          </form>
+            </form>
+            {% endif %}
         </div>
+            
         {% if comments %}
-         {% for c in comments %}
-         <li>{{ c.comment }}</li>
+        {% for c in comments %}
+        <div class="container">
+            <li>{{ c.comment }}</li>
+            <strong><p class="float-right">made by {{c.made_by}}</p></strong>
+        </div>
+
+        <hr class="my-4">
          {% endfor %}
          {% else %}
             <strong>What an empty comment section!</strong>

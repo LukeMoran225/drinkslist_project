@@ -110,7 +110,6 @@ $(document).ready(function(){
         click:function(event){
              // check whether the text field is empty
             if($("#query").val().length<1){
-                alert("The text field is empty!");
                 return false;
             }else{
                 search();

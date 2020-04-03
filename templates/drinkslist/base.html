@@ -34,7 +34,7 @@
         </nav>
         <div class="btn-group " role="group" aria-label="Basic example">
             {% block nav_button_block %}
-            {% if user.is_authenticated %}
+            {% if current_user.is_authenticated %}
             <a href="{% url 'drinkslist:index' %}"><button type="button" class="btn btn-secondary active">Home</button></a>
             <a href="{% url 'drinkslist:drinks'%}"><button type="button" class="btn btn-secondary active">Drinks</button></a>
             <a href="{% url 'drinkslist:add_drink'%}"><button type="button" class="btn btn-dark btn-secondary active">Add a Drink</button></a>
@@ -43,6 +43,7 @@
             <a href="{% url 'auth_logout' %}?next=/drinkslist/"><button type="button" class="btn btn-dark btn-secondary active" >Logout</button></a>
             <a href="{% url 'auth_password_change' %}?next=/drinkslist/"><button type="button" class="btn btn-dark btn-secondary active" >Change Password</button></a>
             {% else %}
+            <a href="{% url 'drinkslist:drinks'%}"><button type="button" class="btn btn-secondary active">Drinks</button></a>
             <a href="{% url 'drinkslist:login' %}"><button type="button" class="btn btn-secondary active">Login</button></a>
             <a href="{% url 'registration_register' %}"><button type="button" class="btn btn-dark btn-secondary active" >Register</button></a>
             {% endif %}
@@ -91,6 +92,7 @@
     <script src="{% static 'js/remove-account-ajax.js' %}" crossorigin="anonymous"></script>
     <script src="{% static 'js/update-profile-ajax.js' %}" crossorigin="anonymous"></script>
     <script src="{% static 'js/create-recipe-s.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'js/add-comment.js' %}" crossorigin="anonymous"></script>
     
 </body>
 </html>

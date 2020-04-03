@@ -26,8 +26,11 @@
         <strong>Doesn't look like there are any drinks!</strong>
         {% endif %}
         <br>
+        
+        {% if user.is_authenticated %}
         <a href="{% url 'drinkslist:add_drink' %}"><button type="button" class="btn btn-secondary active">Add a drink</button></a>
-            </div>
+        {% endif %}
+    </div>
     </div>
 
 
