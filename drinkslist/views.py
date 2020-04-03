@@ -12,17 +12,19 @@ from django.contrib.auth.models import User
 from drinkslist.models import Recipe, UserProfile, Drink
 
 
-
 def index(request):
     context_dict = {}
-    return render(request, 'drinkslist/index.html',context_dict)
+    return render(request, 'drinkslist/index.html', context_dict)
+
 
 class AboutView(View):
-    def get(self,request):
-        return render(request,'drinkslist/about.html')
+    def get(self, request):
+        return render(request, 'drinkslist/about.html')
+
 
 def contactus(request):
-    return render(request,'drinkslist/contactus.html')
+    return render(request, 'drinkslist/contactus.html')
+
 
 def register(request):
     registered = False
@@ -60,13 +62,13 @@ def register(request):
 
 
 def user_login(request):
-    if request.method =='POST':
-        username= request.POST.get('username')
+    if request.method == 'POST':
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username=username,password=password)
+        user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
-                login(request,user)
+                login(request, user)
                 return redirect(reverse('drinkslist:index'))
             else:
                 return HttpResponse("Your Drinkslist account is disabled.")
@@ -74,7 +76,7 @@ def user_login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied")
     else:
-        return render(request,'drinkslist/login.html')
+        return render(request, 'drinkslist/login.html')
 
 
 def user_logout(request):
@@ -101,7 +103,7 @@ def register_profile(request):
 
 class RegisterProfile(View):
     @method_decorator(login_required)
-    def post(self,request):
+    def post(self, request):
         context_dict = {}
         form = UserProfileForm()
         form = UserProfileForm(request.POST, request.FILES)
@@ -116,29 +118,29 @@ class RegisterProfile(View):
         else:
             print(form.errors)
 
-        context_dict = {'form':form}
-        return render(request, 'drinkslist/profile_registration.html', context_dict)
-    
-    @method_decorator(login_required)
-    def get(self,request):
-        form = UserProfileForm()
-        context_dict = {'form':form}
+        context_dict = {'form': form}
         return render(request, 'drinkslist/profile_registration.html', context_dict)
 
+    @method_decorator(login_required)
+    def get(self, request):
+        form = UserProfileForm()
+        context_dict = {'form': form}
+        return render(request, 'drinkslist/profile_registration.html', context_dict)
 
 
 class ProfileView(View):
-   
+
     # avoid repeating [DRY]
     def get_user_details(self, username):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             return None
-        
+
         user_profile = UserProfile.objects.get_or_create(user=user)[0]
         # current seleted detailed form
-        form = UserProfileForm({'is_professional': user_profile.is_professional,'is_private':user_profile.is_private,'picture': user_profile.picture})
+        form = UserProfileForm({'is_professional': user_profile.is_professional, 'is_private': user_profile.is_private,
+                                'picture': user_profile.picture})
         return (user, user_profile, form)
 
     @method_decorator(login_required)
@@ -149,21 +151,21 @@ class ProfileView(View):
         except TypeError:
             return redirect(reverse('drinkslist:index'))
         context_dict = {'user_profile': user_profile,
-        'selected_user': user,
-        'form': form}
+                        'selected_user': user,
+                        'form': form}
         return render(request, 'drinkslist/profile.html', context_dict)
-    
+
     # update profile
     @method_decorator(login_required)
     def post(self, request, username):
-         # username from url, paramised view
+        # username from url, paramised view
         context_dict = {}
         try:
             (user, user_profile, form) = self.get_user_details(username)
         except TypeError:
             print("error")
             return redirect(reverse('drinkslist:index'))
-        
+
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             # refresh the form and commit 
@@ -173,20 +175,23 @@ class ProfileView(View):
             print(form.errors)
             # return old details
             context_dict = {'user_profile': user_profile,
-            'selected_user': user,
-            'form': form}
+                            'selected_user': user,
+                            'form': form}
             return render(request, 'drinkslist/profile.html', context_dict)
+
 
 class ListProfilesView(View):
     @method_decorator(login_required)
-    def get(self,request):
+    def get(self, request):
         profiles = UserProfile.objects.filter(is_private=False)
 
-        return render(request,'drinkslist/list_profiles.html',{'user_profile_list':profiles})
+        return render(request, 'drinkslist/list_profiles.html', {'user_profile_list': profiles})
+
 
 """
 AJAX HELPER FUNCTION
 """
+
 
 # AJAX Applied - search helper function : return the searching results of google & Site
 def search(request):
@@ -206,15 +211,16 @@ def search(request):
 
     return HttpResponse(json.dumps(result_list))
 
+
 # Ajax Applied - test user input in login page
 def check_login(request):
-    if request.method =='POST':
-        username= request.POST.get('username')
+    if request.method == 'POST':
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username=username,password=password)
+        user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
-                login(request,user)
+                login(request, user)
                 return redirect(reverse('drinkslist:index'))
             else:
                 return HttpResponse("Your Drinkslist account is disabled.")
@@ -222,16 +228,17 @@ def check_login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied")
 
+
 @login_required
 def user_delete(request):
     if request.method == 'POST':
-        id= int(request.POST.get('id'))
+        id = int(request.POST.get('id'))
         user = User.objects.get(id=id)
         if user:
             user.delete()
             return HttpResponse("Deleted Successfully!")
     else:
-            return HttpResponse("Access Fobbidden")
+        return HttpResponse("Access Fobbidden")
 
 
 def show_drink(request, drink_name_slug):
@@ -244,7 +251,7 @@ def show_drink(request, drink_name_slug):
     except Drink.DoesNotExist:
         context_dict['drink'] = None
         context_dict['pages'] = None
-    return render(request,'drinkslist/drink.html', context=context_dict)
+    return render(request, 'drinkslist/drink.html', context=context_dict)
 
 
 def drinks(request):
@@ -252,21 +259,25 @@ def drinks(request):
     context_dict = {
         'drinks': drink_list,
     }
-    return render(request,'drinkslist/drinks.html', context = context_dict)
+    return render(request, 'drinkslist/drinks.html', context=context_dict)
+
 
 @login_required
-def create_recipe(request):
-
+def create_recipe(request, drink_name_slug):
     form = RecipeCreateForm()
+    drink = Drink.objects.get(slug=drink_name_slug)
     if request.method == 'POST':
-         #  current User - must acquire from User model
+        # drink = Drink.objects.get(slug=drink_name_slug)
+        # context_dict = {'drink': drink}
+        #  current User - must acquire from User model
         # current drink id - acquire the Drink instance
         user = User.objects.get(username=request.user)
-        drink_id = request.POST['drink_name']
-        drink = Drink.objects.get(pk=drink_id)
+        # drink_id = request.POST['drink_name']
+        # drink = Drink.objects.get(pk=drink_id)
         # To change the POST data, deep copy
         post_copy = request.POST.copy()
         post_copy['added_by'] = user
+        post_copy['drink_name'] = drink.name
         # post_copy['drink_name'] = drink_id#form need id
         # print("COPY",post_copy)
         # new form data - check the validity
@@ -289,14 +300,16 @@ def create_recipe(request):
             return redirect('/drinkslist/')
     else:
         print(form.errors)
-    return render(request, 'drinkslist/create_recipe.html', {'form':form})
+    return render(request, 'drinkslist/create_recipe.html', {'form': form, 'drink': drink})
+
 
 def recipe_detail(request, id):
     recipe = Recipe.objects.get(id=id)
     context = {
-        'Recipe':recipe,
+        'Recipe': recipe,
     }
     return render(request, 'drinkslist/recipe_detail.html', context)
+
 
 def add_drink(request):
     form = DrinkForm()
@@ -310,7 +323,7 @@ def add_drink(request):
         # new form data - check the validity
         form = DrinkForm(post_copy)
         if form.is_valid():
-            instance = form.save(commit=False)#save later
+            instance = form.save(commit=False)  # save later
             instance.added_by = user
             instance.save()
             return redirect('/drinkslist/')

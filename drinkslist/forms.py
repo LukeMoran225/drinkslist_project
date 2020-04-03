@@ -24,7 +24,7 @@ class RecipeCreateForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = (
-            'drink_name',
+            # 'drink_name',
             # 'added_by',
             'equipment',
             'ingredients',

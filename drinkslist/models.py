@@ -33,8 +33,8 @@ class Drink(models.Model):
 class Recipe(models.Model):
     # ID static variable that increments by 1
     # ID = models.IntegerField(primary_key=True)
-    drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE, related_name='recipe_drink')
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipe_author')
     equipment = models.CharField(max_length=250)
     ingredients = models.CharField(max_length=250)
     how_to = models.CharField(max_length=250)
