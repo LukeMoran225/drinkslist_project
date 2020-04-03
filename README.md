@@ -56,6 +56,13 @@ python populate_<filename>.py
 (drinkslist) C:\>Workspace>drinkslist_project> python manage.py createsuperuser
 ```
 
+* to flush the database
+
+```cmd
+(drinkslist) C:\>Workspace>drinkslist_project> python manage.py makemigrations
+(drinkslist) C:\>Workspace>drinkslist_project> python manage.py migrate
+```
+
 ## Running the Project
 
 Once all the steps above are done, the project is already to run locally in [127.0.0.1:8000](http://127.0.0.1:8000/)
