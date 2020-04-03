@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response,redirect
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -257,22 +257,18 @@ def drinks(request):
 
 @login_required
 def create_recipe(request):
-    instance = Recipe(added_by=request.user)
-    form = RecipeCreateForm(instance=instance)
+
+    form = RecipeCreateForm()
     if request.method == 'POST':
         form = RecipeCreateForm(request.POST)
         if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.added_by = request.user
-            recipe.save()
-
+            instance = form.save(commit=False)
+            instance.added_by = request.user
+            instance.save()
             return redirect('/drinkslist/')
     else:
-        form = RecipeCreateForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'drinkslist/create_recipe.html', context)
+        print(form.errors)
+    return render(request, 'drinkslist/create_recipe.html', {'form':form})
 
 def  recipe_detail(request, id):
     recipe = Recipe.objects.get(id=id)

@@ -23,9 +23,7 @@ class Drink(models.Model):
     slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
-        super().save(self, *args, **kwargs)
         self.slug = slugify(self.name)
-        self.added_by = self.created_by
         super(Drink, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -35,12 +33,13 @@ class Drink(models.Model):
 class Recipe(models.Model):
     # ID static variable that increments by 1
     # ID = models.IntegerField(primary_key=True)
-    drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    drink_name = models.ForeignKey(Drink, on_delete=models.CASCADE, related_name='recipe_drink')
+    added_by = models.CharField(max_length=100, null=True)
+    # added_by = models.CharField(max_length=100, blank=True, null=True)
     equipment = models.CharField(max_length=250)
     ingredients = models.CharField(max_length=250)
     how_to = models.CharField(max_length=250)
-    picture = models.ImageField(upload_to='recipe_images', blank=True)
+    picture = models.ImageField(upload_to='recipe_images', blank=True, )
 
     def __str__(self):
         return str(self.drink_name) + '' + str(self.id)

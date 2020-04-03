@@ -19,9 +19,7 @@ class UserProfileForm(forms.ModelForm):
 
 
 class RecipeCreateForm(forms.ModelForm):
-    added_by = forms.CharField(widget=forms.HiddenInput())
-
-
+    added_by = forms.CharField(widget=forms.HiddenInput(), required=False)
     class Meta:
         model = Recipe
         fields = (
