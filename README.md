@@ -44,9 +44,9 @@ Note that there are several dependencies required for running the project.
 * to initialise the database
 
 ```cmd
-python manage.py makemigrations drinkslist
-python manage.py migrate
-python populate_<filename>.py
+(drinkslist) C:\>Workspace>drinkslist_project> python manage.py makemigrations
+(drinkslist) C:\>Workspace>drinkslist_project> python manage.py migrate
+(drinkslist) C:\>Workspace>drinkslist_project> python populate_<filename>.py
 (drinkslist) C:\>Workspace>drinkslist_project> pip install -r requirements.txt
 ```
 
@@ -54,13 +54,6 @@ python populate_<filename>.py
 
 ```cmd
 (drinkslist) C:\>Workspace>drinkslist_project> python manage.py createsuperuser
-```
-
-* to flush the database
-
-```cmd
-(drinkslist) C:\>Workspace>drinkslist_project> python manage.py makemigrations
-(drinkslist) C:\>Workspace>drinkslist_project> python manage.py migrate
 ```
 
 ## Running the Project
