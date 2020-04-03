@@ -20,14 +20,14 @@
 		{% for r in recipes %}
         <li><a href="{% url 'drinkslist:recipe_detail' drink.slug r.id %}">{{ r.added_by }}</a></li>
 		{% endfor %}
-        <br>
-        <a href="{% url 'drinkslist:create_recipe' drink.slug %}"><button type="button" class="btn btn-secondary active">Add a recipe</button></a>
         {% else %}
         <strong>No recipes currently for this drink.</strong>
         {% endif %}
         {% else %}
         This drink doesn't have a page yet!
 		{% endif %}
+        <br>
+        <a href="{% url 'drinkslist:create_recipe' drink.slug %}"><button type="button" class="btn btn-secondary active">Add a recipe</button></a>
             </div>
     </div>
 
